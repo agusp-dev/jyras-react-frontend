@@ -1,11 +1,36 @@
-import React, { Component } from 'react'
+import React, { useCallback, useContext } from 'react'
+import { withRouter, Redirect } from 'react-router'
+import firebaseApp from '../../utils/firebaseApp'
+import { AuthContext } from '../../utils/Auth'
 import { Copyright } from '../../components'
 import { Typography, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core'
 import { LockOutlined } from '@material-ui/icons'
 import { useStyles } from './styles'
 
-export default function Signin() {
+const Signin = ({ history }) => {
   const classes = useStyles()
+
+  const handleLogin = useCallback(
+
+    async event => {
+      event.preventDefault()
+      const { email, password } = event.target.elements
+      try {
+        await firebaseApp.auth().signInWithEmailAndPassword(email.value, password.value)
+        history.push('/')
+      } catch (error) {
+        alert(error)
+      }
+    },
+    [history]
+  )
+
+  const { currentUser } = useContext(AuthContext)
+  if (currentUser) {
+    return <Redirect to='/' />
+  }
+
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -18,7 +43,7 @@ export default function Signin() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={handleLogin}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -76,4 +101,4 @@ export default function Signin() {
   )
 }
 
-export { Signin }
+export default withRouter(Signin)
