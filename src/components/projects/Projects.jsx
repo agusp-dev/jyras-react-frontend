@@ -10,6 +10,7 @@ class Projects extends Component {
   }
 
   render() {
+    console.log('Projects render')
     return (
       <div>
         <h1>Projects</h1>
