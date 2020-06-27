@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core'
 import signinImage from '../../assets/signin5.jpg'
+import * as color from '../../utils/colors'
 
 export const useStyles = makeStyles(theme => ({
   root: {
@@ -29,5 +30,26 @@ export const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    boxShadow: 'none',
+    textTransform: 'none',
+    fontSize: 16,
+    padding: '6px 12px',
+    border: '1px solid',
+    lineHeight: 1.5,
+    backgroundColor: color.MAIN_GREEN,
+    borderColor: color.MAIN_GREEN,
+    '&:hover': {
+      backgroundColor: color.SECOND_GREEN,
+      borderColor: color.SECOND_GREEN,
+      boxShadow: 'none',
+    },
+    '&:active': {
+      boxShadow: 'none',
+      backgroundColor: color.SECOND_GREEN,
+      borderColor: color.SECOND_GREEN,
+    },
+    '&:focus': {
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+    }
   }
 }))

@@ -3,8 +3,8 @@ import { withRouter, Redirect } from 'react-router'
 import firebaseApp from '../../utils/firebaseApp'
 import { AuthContext } from '../../utils/Auth'
 import { Copyright } from '../../components'
-import { Typography, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core'
-import { LockOutlined } from '@material-ui/icons'
+import Logo from '../../assets/logo/logo.svg'
+import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core'
 import { useStyles } from './styles'
 
 const Signin = ({ history }) => {
@@ -37,12 +37,7 @@ const Signin = ({ history }) => {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlined />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
+          <img src={Logo} alt="App logo"/>
           <form className={classes.form} noValidate onSubmit={handleLogin}>
             <TextField
               variant="outlined"
