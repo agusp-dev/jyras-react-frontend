@@ -1,27 +1,33 @@
 import React, { Component } from 'react'
-import firebaseApp from './firebaseApp' 
+// import firebaseApp from './firebaseApp' 
 
 export const AuthContext = React.createContext()
 
 class AuthProvider extends Component {
 
   constructor(props) {
+    console.log('Auth constructor localstorage')
     super(props)
     this.state = {
-      currentUser: undefined,
+      user: null,
     }
   }
 
   componentDidMount() {
-    firebaseApp.auth().onAuthStateChanged(user => this.setState({currentUser: user}))
+    // firebaseApp.auth().onAuthStateChanged(user => this.setState({currentUser: user}))
+    const user = localStorage.getItem('user')
+    console.log('Auth componentDidMount localstorage user', user)
+    this.setState({ user }) 
   }
 
   render() {
-    const currentUser = this.state.currentUser
+    const { user } = this.state
+    console.log('Auth render localstorage user', user)
+
     return (
       <AuthContext.Provider
         value={{
-          currentUser
+          user
         }}
         > {this.props.children}
       </AuthContext.Provider>
@@ -29,4 +35,4 @@ class AuthProvider extends Component {
   }
 }
 
-export default AuthProvider 
+export { AuthProvider }

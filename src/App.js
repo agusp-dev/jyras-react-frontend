@@ -1,20 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Signin from './components/signin/signin'
-import { Projects } from './components'
-import AuthProvider from './utils/Auth'
-import { PrivateRoute } from './utils'
+import { Signin, Projects } from './components'
+import { AuthProvider, PrivateRoute } from './utils'
+
+export const AuthContext = React.createContext()
 
 const App = () => {
   return (
-    <AuthProvider>
+    // <AuthContext>
       <Router>
         <div>
           <PrivateRoute exact path='/' component={Projects} />
           <Route exact path='/signin' component={Signin} />
         </div>
       </Router>
-    </AuthProvider>
+    // </AuthContext>
   )
 }
 

@@ -1,15 +1,17 @@
-import React, { Component, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { AuthContext } from './Auth'
 
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
-  const { currentUser } = useContext(AuthContext)
+  
+  const user = localStorage.getItem('user')
+  console.log('PrivateRoute localstorage user', user)
 
   return (
     <Route 
       {...rest}
       render={routeProps => 
-        !!currentUser ? (
+        !!user ? (
           <RouteComponent {...routeProps} />
         ) : (
           <Redirect to={'/signin'} />

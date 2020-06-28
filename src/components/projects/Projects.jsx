@@ -1,23 +1,22 @@
-import React, { Component } from 'react'
-import firebaseApp from '../../utils/firebaseApp'
+import React, { useCallback } from 'react'
+import { userService } from '../../service' 
  
-class Projects extends Component {
+const Projects = () => {
 
-  onLogout = e => {
-    e.preventDefault()
-    console.log('onLogout')
-    firebaseApp.auth().signOut()
-  }
+  const handleLogout = useCallback(
+    async event => {
+      event.preventDefault()
+      await userService.firebaseLogout()
+      localStorage.removeItem('user')
+    }
+  )
 
-  render() {
-    console.log('Projects render')
-    return (
-      <div>
-        <h1>Projects</h1>
-        <button onClick={this.onLogout}>Logout</button>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <h1>Projects</h1>
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+  )
 }
 
 export { Projects }
