@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { MenuAppBar } from '../components'
+import { MenuAppBar } from '..'
 
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   

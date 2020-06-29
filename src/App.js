@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Signin, NoMatchPage } from './components'
+import { Signin } from './components'
+import { NoMatchPage } from './components'
 import { Projects } from './view'
-import { PrivateRoute } from './utils'
+import { PrivateRoute } from './components'
 
 export const AuthContext = React.createContext()
 

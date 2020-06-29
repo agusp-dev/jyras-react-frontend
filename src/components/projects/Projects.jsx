@@ -1,10 +1,12 @@
 import React from 'react'
+import { Header } from '../'
 
 const Projects = () => {
 
   return (
     <div>
-      <h1>Projects</h1>
+      <Header title='Projects'/>
+      
     </div>
   )
 }
