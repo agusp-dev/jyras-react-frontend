@@ -8,16 +8,24 @@ const firebaseLogin = (user, pass, callback) => {
        * result:
        * {additionalUserInfo:{...}, credential:null, operationType:'signIn', user:{...} }
        */
-      console.log('firebaseLogin result', result)
-      callback({ type: 0, user: result.user, msg: null })
+      // console.log('firebaseLogin result', result, firebaseApp.auth().currentUser)
+      const { user } = result
+      callback({ 
+        type: 0, 
+        loggedUser: {
+          email: user.email,
+          refreshToken: user.refreshToken
+        }, 
+        msg: null 
+      })
     })
     .catch(error => {
       /**
        * error:
        * {a:null, code:string, message:string}
        */
-      console.log('firebaseLogin error', error)
-      callback({ type: 1, user: null, msg: error.message })
+      // console.log('firebaseLogin error', error)
+      callback({ type: 1, loggedUser: null, msg: error.message })
     })
 }
 

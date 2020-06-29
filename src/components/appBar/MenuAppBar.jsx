@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react'
+import PropTypes from 'prop-types'
 import { userService } from '../../service' 
 import { Redirect } from 'react-router-dom'
 import { useStyles } from './styles'
@@ -11,7 +12,7 @@ import Menu from '@material-ui/core/Menu'
 import Logo from '../../assets/logo/logo_white_large_horizontal.png'
 import { Typography } from '@material-ui/core'
 
-const MenuAppBar = () => {
+const MenuAppBar = ({userEmail}) => {
 
   const classes = useStyles()
 
@@ -49,7 +50,7 @@ const MenuAppBar = () => {
             <img src={Logo} alt="Logo" className={classes.logo}/>
           </div>
           <Typography>
-              Test Guest
+            {userEmail ? userEmail : 'Guest'}
           </Typography>
           <div>
             <IconButton
@@ -84,6 +85,10 @@ const MenuAppBar = () => {
       </AppBar>
     </div>
   )
+}
+
+MenuAppBar.propTypes = {
+  userEmail: PropTypes.string.isRequired
 }
 
 export { MenuAppBar }

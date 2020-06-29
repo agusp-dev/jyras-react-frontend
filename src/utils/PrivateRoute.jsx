@@ -4,7 +4,10 @@ import { MenuAppBar } from '../components'
 
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   
-  const user = localStorage.getItem('user')
+  let user = localStorage.getItem('user')
+  if (user) {
+    user = JSON.parse(user)
+  }
 
   return (
     <Route 
@@ -12,7 +15,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
       render={routeProps => 
         !!user ? (
           <Fragment>
-            <MenuAppBar />
+            <MenuAppBar userEmail={user.email}/>
             <RouteComponent {...routeProps} />
           </Fragment>
         ) : (

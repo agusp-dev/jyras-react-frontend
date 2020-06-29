@@ -11,9 +11,9 @@ const Signin = () => {
   const [isLogged, setLoggedIn] = useState(false)
 
   const onSigninCallback = result => {
-    const { type, user, msg } = result
+    const { type, loggedUser, msg } = result
     if (type === 0) {
-      localStorage.setItem('user', user)
+      localStorage.setItem('user', JSON.stringify(loggedUser))
       setLoggedIn(true)
     } else {
       alert( msg )
