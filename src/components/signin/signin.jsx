@@ -4,33 +4,17 @@ import Logo from '../../assets/logo/logo.svg'
 import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core'
 import { useStyles } from './styles'
 import { userService } from '../../service'
-import { Redirect } from 'react-router'
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 const Signin = () => {
-
-  const history = useHistory()
-
   const classes = useStyles()
-
-  // const [isLogged, setLoggedIn] = useState(false)
-
-  // useEffect(() => {
-  //   // console.log('signin useEffect', isLogged)
-  //   // if (isLogged) {
-  //   //   redirect()
-  //   // }
-  // })
+  const [isLogged, setLoggedIn] = useState(false)
 
   const onSigninCallback = result => {
     const { type, user, msg } = result
     if (type === 0) {
       localStorage.setItem('user', user)
-      console.log('asdfasdfasdfasfdasfdasfasdfdas')
-      // setLoggedIn(true)
-      // history.push('/')
-      // redirect()
-      // console.log('setLoggedIn')
+      setLoggedIn(true)
     } else {
       alert( msg )
     }
@@ -48,17 +32,12 @@ const Signin = () => {
     }
   )
 
-  // useHistory().push('/')
-  //check if user is logged and redirect
-  // const user = localStorage.getItem('user')
-
-  // if (isLogged) {
-  //   return <Redirect to={'/'} />
-  // }
+  if (isLogged) {
+    return <Redirect to='/' />
+  }
 
   return (
     <div>
-      {console.log('signin render')}
       <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
