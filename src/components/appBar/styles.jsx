@@ -10,5 +10,13 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+  },
+  appbar: {
+    background: color.MAIN_BLUE
+  },
+  logo: {
+    height: 24,
+    width: 105,
+    marginTop: '5px'
   }
 }))
