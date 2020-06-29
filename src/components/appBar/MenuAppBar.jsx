@@ -9,6 +9,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import Logo from '../../assets/logo/logo_white_large_horizontal.png'
+import { Typography } from '@material-ui/core'
 
 const MenuAppBar = () => {
 
@@ -26,7 +27,6 @@ const MenuAppBar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
 
   const handleLogout = useCallback(
     async event => {
@@ -48,6 +48,9 @@ const MenuAppBar = () => {
           <div className={classes.title}>
             <img src={Logo} alt="Logo" className={classes.logo}/>
           </div>
+          <Typography>
+              Test Guest
+          </Typography>
           <div>
             <IconButton
               aria-label="account of current user"
