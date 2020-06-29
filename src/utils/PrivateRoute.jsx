@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, Fragment } from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { AuthContext } from './Auth'
+import { MenuAppBar } from '../components'
 
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   
@@ -12,7 +12,10 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
       {...rest}
       render={routeProps => 
         !!user ? (
-          <RouteComponent {...routeProps} />
+          <Fragment>
+            <MenuAppBar />
+            <RouteComponent {...routeProps} />
+          </Fragment>
         ) : (
           <Redirect to={'/signin'} />
         )

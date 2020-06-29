@@ -32,7 +32,11 @@ const Signin = () => {
     }
   )
 
-  if (isLogged) {
+  /**
+   * Avoid manual routing
+   */
+  const loggedUser = localStorage.getItem('user')
+  if (isLogged || loggedUser) {
     return <Redirect to='/' />
   }
 

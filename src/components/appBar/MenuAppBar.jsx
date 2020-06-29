@@ -27,12 +27,8 @@ const MenuAppBar = () => {
     setAnchorEl(null);
   };
 
-
-
   return (
-    
     <div className={classes.root}>
-      
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -72,18 +68,8 @@ const MenuAppBar = () => {
           </div>
         </Toolbar>
       </AppBar>
-
-
-
-
-
     </div>
-
-
   )
-
-
-
 }
 
 export { MenuAppBar }
