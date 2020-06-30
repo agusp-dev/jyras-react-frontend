@@ -4,3 +4,5 @@ export const THIRD_BLUE = '#4c5474'
 
 export const MAIN_GREEN = '#06956e'
 export const SECOND_GREEN = '#42a890'
+
+export const WHITE = '#ffffff'

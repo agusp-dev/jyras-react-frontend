@@ -1,6 +1,7 @@
 import React from 'react'
 import { useStyles } from './styles'
 import { ProjectCard } from './ProjectCard'
+import { AddButton } from './AddButton'
 import { Grid } from '@material-ui/core'
 
 const projects = [
@@ -84,6 +85,7 @@ const ProjectList = () => {
           })}
         </Grid>
       </Grid>
+      <AddButton />
     </Grid>
   )
 }
