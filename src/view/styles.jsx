@@ -2,6 +2,6 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
   root: {
-    margin: '32px 20px 0 20px'
+    margin: '32px 20px'
   }
 }))

@@ -2,6 +2,8 @@ export * from './signin/signin'
 export * from './signin/copyright'
 
 export * from './projects/Projects'
+export * from './projects/ProjectList'
+
 export * from './splash/Splash'
 
 export * from './appBar/MenuAppBar'
