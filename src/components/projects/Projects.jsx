@@ -6,7 +6,9 @@ const Projects = () => {
 
   return (
     <div>
-      <Header title='Projects'/>
+      <Header 
+        title='Projects'
+        backButton={false} />
       <ProjectList />
     </div>
   )

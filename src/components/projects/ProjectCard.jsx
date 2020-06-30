@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardContent, Typography, CardActionArea, Button, CardActions } from '@material-ui/core'
+import { Card, CardContent, Typography, Button, CardActions } from '@material-ui/core'
 import { useStyles } from './styles'
 
-const ProjectCard = ({id, name, description, tasks, members}) => {
+const ProjectCard = ({id, name, description, tasks, members, onSelectedProject}) => {
 
   const classes = useStyles()
 
@@ -18,7 +18,7 @@ const ProjectCard = ({id, name, description, tasks, members}) => {
         </Typography>
       </CardContent>
       <CardActions className={classes.cardViewButton}> 
-        <Button size='small' color='primary' align>
+        <Button size='small' color='primary' onClick={() => onSelectedProject(id)}>
           View
         </Button>
       </CardActions>  
@@ -31,7 +31,8 @@ ProjectCard.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   tasks: PropTypes.array.isRequired,
-  members: PropTypes.array.isRequired
+  members: PropTypes.array.isRequired,
+  onSelectedProject: PropTypes.func.isRequired
 }
 
 export { ProjectCard }
