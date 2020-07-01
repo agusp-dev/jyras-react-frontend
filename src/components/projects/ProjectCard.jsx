@@ -27,7 +27,7 @@ const ProjectCard = ({id, name, description, tasks, members, onSelectedProject})
 }
 
 ProjectCard.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   tasks: PropTypes.array.isRequired,

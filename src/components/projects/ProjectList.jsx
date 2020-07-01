@@ -1,78 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useStyles } from './styles'
+import { projectsService } from '../../service'
 import { ProjectCard } from './ProjectCard'
 import { AddButton } from './AddButton'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { Redirect } from 'react-router'
-
-const projects = [
-  { 
-    id: 1, 
-    name: 'Project 1', 
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-    tasks: [],
-    members: []
-  },
-  {
-    id: 2, 
-    name: 'Project 2', 
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-    tasks: [],
-    members: []
-  },
-  {
-    id: 3, 
-    name: 'Project 3', 
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-    tasks: [],
-    members: []
-  },
-  {
-    id: 4, 
-    name: 'Project 4', 
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-    tasks: [],
-    members: []
-  },
-  { 
-    id: 5, 
-    name: 'Project 5', 
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-    tasks: [],
-    members: []
-  },
-  {
-    id: 6, 
-    name: 'Project 6', 
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-    tasks: [],
-    members: []
-  },
-  {
-    id: 7, 
-    name: 'Project 7', 
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-    tasks: [],
-    members: []
-  },
-  {
-    id: 8, 
-    name: 'Project 8', 
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-    tasks: [],
-    members: []
-  }
-]
 
 const ProjectList = () => {
 
   const classes = useStyles()
   const [selectedProject, navigateToSelectedProject] = useState(undefined)
+  
+  const [projects, setProjects] = useState(undefined)
+  useEffect(() => {
+    getProjects()
+  }, [])
+
+  const getProjects = async () => {
+    const email = getUserEmail()
+    try {
+      await projectsService.getProjectsData(email, onGetProjects)
+    } catch(error) {
+      alert(error.message)
+    }
+  }
+
+  const getUserEmail = () => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    return user.email
+  }
+
+  const onGetProjects = result => {
+    const { type, projects, error } = result
+    if (type === 0) {
+      setProjects(projects)
+    } else {
+      alert(error)
+    }
+  }
+
+
+
 
   const onSelectedProject = id => {
-    const sProject = projects.find( s => s.id === id )
-    if (!sProject) return
-    goToSelectedProject(sProject)
+    // const sProject = projects.find( s => s.id === id )
+    // if (!sProject) return
+    // goToSelectedProject(sProject)
   }
 
   const goToSelectedProject = project => {
@@ -96,21 +69,26 @@ const ProjectList = () => {
 
   return (
     <Grid container>
+      {console.log('projectList render')}
       <Grid xs={12} item>
         <Grid container justify='flex-start' spacing={3}>
-          {projects.map(p => {
-            return (
-              <Grid key={p.id} item={true} xs={12} sm={3}>  
-                <ProjectCard 
-                  id={p.id}
-                  name={p.name}
-                  description={p.description}
-                  tasks={p.tasks}
-                  members={p.members}
-                  onSelectedProject={onSelectedProject} />  
-              </Grid>
-            )
-          })}
+          {projects && projects.length > 0 ? (
+            projects.map(p => {
+              return (
+                <Grid key={p.id} item={true} xs={12} sm={3}>  
+                  <ProjectCard 
+                    id={p.id}
+                    name={p.name}
+                    description={p.description}
+                    tasks={p.tasks}
+                    members={p.members}
+                    onSelectedProject={onSelectedProject} />  
+                </Grid>
+              )
+            })
+          ) : (<Typography>
+                No Projects yet. Please, add one.
+              </Typography>)}
         </Grid>
       </Grid>
       <AddButton />
