@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { userService } from '../../service' 
+import { userAuthService } from '../../service' 
 import { Redirect } from 'react-router-dom'
 import { useStyles } from './styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -32,7 +32,7 @@ const MenuAppBar = ({userEmail}) => {
   const handleLogout = useCallback(
     async event => {
       event.preventDefault()
-      await userService.firebaseLogout()
+      await userAuthService.firebaseLogout()
       localStorage.removeItem('user')
       setLogout(true)
     }

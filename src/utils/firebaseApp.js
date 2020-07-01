@@ -1,7 +1,7 @@
-import * as firebase from 'firebase/app'
+import * as firebase from 'firebase'
 import 'firebase/auth'
 
-const firebaseApp = firebase.initializeApp({
+const app = firebase.initializeApp({
   apiKey: "AIzaSyDtPx38OQjNCnNceX3i4pTCyGaVLJdUM5U",
   authDomain: "jyras-a0151.firebaseapp.com",
   databaseURL: "https://jyras-a0151.firebaseio.com",
@@ -11,4 +11,15 @@ const firebaseApp = firebase.initializeApp({
   appId: "1:310996952994:web:5652cf4beb4a99dac274fb"
 })
 
-export default firebaseApp
+let firestore
+const db = () => {
+  if (!firestore) {
+    firestore = firebase.firestore(app)
+  }
+  return firestore
+}
+
+export const firebaseApp = { 
+  app,
+  db
+}

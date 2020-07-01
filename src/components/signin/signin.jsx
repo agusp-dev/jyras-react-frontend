@@ -3,7 +3,7 @@ import { Copyright } from '../../components'
 import Logo from '../../assets/logo/logo.svg'
 import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core'
 import { useStyles } from './styles'
-import { userService } from '../../service'
+import { userAuthService, userService } from '../../service'
 import { Redirect } from 'react-router-dom'
 
 const Signin = () => {
@@ -13,10 +13,17 @@ const Signin = () => {
   const onSigninCallback = result => {
     const { type, loggedUser, msg } = result
     if (type === 0) {
-      localStorage.setItem('user', JSON.stringify(loggedUser))
-      setLoggedIn(true)
+      getFirebaseUserData(loggedUser)
     } else {
       alert( msg )
+    }
+  }
+
+  const getFirebaseUserData = async loggedUser => {
+    try {
+      await userService.getUserData(loggedUser, onGetUserCallback)
+    } catch (error) {
+      alert(error)
     }
   }
 
@@ -25,12 +32,22 @@ const Signin = () => {
       event.preventDefault()
       const { email, password } = event.target.elements
       try {
-        await userService.firebaseLogin(email.value, password.value, onSigninCallback)
+        await userAuthService.firebaseLogin(email.value, password.value, onSigninCallback)
       } catch (error) {
         alert(error)
       }
     }
   )
+
+  const onGetUserCallback = result => {
+    const { type, loggedUser, msg } = result
+    if (type === 0) {
+      localStorage.setItem('user', JSON.stringify(loggedUser))
+      setLoggedIn(true)
+    } else {
+      alert(msg)
+    }
+  }
 
   /**
    * Avoid manual routing
