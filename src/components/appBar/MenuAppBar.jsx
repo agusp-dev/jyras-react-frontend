@@ -12,7 +12,7 @@ import Menu from '@material-ui/core/Menu'
 import Logo from '../../assets/logo/logo_white_large_horizontal.png'
 import { Typography } from '@material-ui/core'
 
-const MenuAppBar = ({userEmail}) => {
+const MenuAppBar = ({name, surname}) => {
 
   const classes = useStyles()
 
@@ -50,7 +50,7 @@ const MenuAppBar = ({userEmail}) => {
             <img src={Logo} alt="Logo" className={classes.logo}/>
           </div>
           <Typography>
-            {userEmail ? userEmail : 'Guest'}
+            {name && surname ? `${name} ${surname}` : 'Ghest'}
           </Typography>
           <div>
             <IconButton
@@ -88,7 +88,8 @@ const MenuAppBar = ({userEmail}) => {
 }
 
 MenuAppBar.propTypes = {
-  userEmail: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  surname: PropTypes.string.isRequired
 }
 
 export { MenuAppBar }

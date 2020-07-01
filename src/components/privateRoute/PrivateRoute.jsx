@@ -15,7 +15,9 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
       render={routeProps => 
         !!user ? (
           <Fragment>
-            <MenuAppBar userEmail={user.email}/>
+            <MenuAppBar 
+              name={user.name}
+              surname={user.surname} />
             <RouteComponent {...routeProps} />
           </Fragment>
         ) : (
