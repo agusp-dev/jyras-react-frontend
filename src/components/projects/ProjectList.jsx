@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useStyles } from './styles'
 import { projectsService } from '../../service'
 import { ProjectCard } from './ProjectCard'
+import { AddProject } from '../alerts/addProject/AddProject'
 import { AddButton } from './AddButton'
 import { Grid, Typography } from '@material-ui/core'
 import { Redirect } from 'react-router'
@@ -9,6 +10,7 @@ import { Redirect } from 'react-router'
 const ProjectList = () => {
 
   const classes = useStyles()
+  const [openAddProjectModal, setOpenAddProjectModal] = useState(false)
   const [selectedProject, navigateToSelectedProject] = useState(undefined)
   
   const [projects, setProjects] = useState(undefined)
@@ -31,11 +33,11 @@ const ProjectList = () => {
   }
 
   const onGetProjects = result => {
-    const { type, projects, error } = result
+    const { type, projects, msg } = result
     if (type === 0) {
       setProjects(projects)
     } else {
-      alert(error)
+      alert(msg)
     }
   }
 
@@ -49,6 +51,44 @@ const ProjectList = () => {
 
   const goToSelectedProject = project => {
     navigateToSelectedProject(project)
+  }
+
+
+
+  const handleClickAddProject = () => {
+    setOpenAddProjectModal(true)
+  }
+
+  const handleSaveNewProject = async e => {
+    e.preventDefault()
+    const name = e.target.name.value
+    const description = e.target.description.value
+    const userEmail = getUserEmail()
+    try {
+      const newProject = {
+        name, 
+        description,
+        tasks: [],
+        members: [],
+        email: userEmail
+      }
+      await projectsService.saveNewProject(newProject, onProjectSavedCallback)
+    } catch(error) {
+      alert(error)
+    }
+    setOpenAddProjectModal(false)
+  }
+
+  const onProjectSavedCallback = result => {
+    const { type, project, msg } = result
+    if (type === 0) {
+      setProjects([
+        ...projects,
+        project
+      ])
+    } else {
+      alert(msg)
+    }
   }
 
   if (selectedProject) {
@@ -68,7 +108,7 @@ const ProjectList = () => {
 
   return (
     <Grid container>
-      {console.log('projectList render')}
+      {console.log('projectList render', openAddProjectModal)}
       <Grid xs={12} item>
         <Grid container justify='flex-start' spacing={3}>
           {projects && projects.length > 0 ? (
@@ -90,7 +130,14 @@ const ProjectList = () => {
               </Typography>)}
         </Grid>
       </Grid>
-      <AddButton />
+      <AddButton handleClickAddProject={handleClickAddProject}/>
+      {openAddProjectModal && (
+        <AddProject 
+          open={openAddProjectModal} 
+          handleClose={() => setOpenAddProjectModal(false)}
+          handleSaveNewProject={handleSaveNewProject}
+        />
+      )}
     </Grid>
   )
 }

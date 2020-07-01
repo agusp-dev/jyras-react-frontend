@@ -16,18 +16,42 @@ const getProjectsData = (email, callback) => {
       callback({
         type: 0,
         projects,
-        error: null
+        msg: null
       })
     })
     .catch(error => {
       callback({
         type: 1,
         projects: null,
-        error: error.message
+        msg: error.message
+      })
+    })
+}
+
+const saveNewProject = (project, callback) => {
+  const dRef = firebaseApp.db().collection('projects')
+  dRef
+    .add(project)
+    .then(docRef => {
+      callback({
+        type: 0,
+        project: {
+          id: docRef.id,
+          ...project
+        },
+        msg: null
+      })
+    })
+    .catch(error => {
+      callback({
+        type: 1,
+        project: null,
+        msg: error.message
       })
     })
 }
 
 export const projectsService = {
-  getProjectsData
+  getProjectsData,
+  saveNewProject
 }

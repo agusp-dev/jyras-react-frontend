@@ -15,3 +15,5 @@ export * from './common/noMatchPage/NoMatchPage'
 
 export * from './selectedProject/SelectedProject'
 
+export * from './alerts/addProject/AddProject'
+
