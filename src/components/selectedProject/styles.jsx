@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
   todoTaskDivider: {
     background: colors.TODO_TASK_COLOR
   },
-  inProgresstaskTitle: {
+  inProgressTaskTitle: {
     padding: 12,
     textAlign: 'center',
     color: colors.IN_PROGRESS_TASK_COLOR,
@@ -29,26 +29,4 @@ export const useStyles = makeStyles(theme => ({
   doneTaskDivider: {
     background: colors.DONE_TASK_COLOR
   }
-
-
-
-
-  // todoTaskPaper: {
-  //   padding: theme.spacing(2),
-  //   textAlign: 'center',
-  //   color: colors.WHITE,
-  //   background: colors.TODO_TASK_COLOR
-  // },
-  // inProgressTaskPaper: {
-  //   padding: theme.spacing(2),
-  //   textAlign: 'center',
-  //   color: colors.WHITE,
-  //   background: colors.IN_PROGRESS_TASK_COLOR
-  // },
-  // doneTaskPaper: {
-  //   padding: theme.spacing(2),
-  //   textAlign: 'center',
-  //   color: colors.WHITE,
-  //   background: colors.DONE_TASK_COLOR
-  // }
 }))
