@@ -39,10 +39,9 @@ const ProjectList = () => {
     }
   }
 
-
-
-
   const onSelectedProject = id => {
+    //todo
+    
     // const sProject = projects.find( s => s.id === id )
     // if (!sProject) return
     // goToSelectedProject(sProject)
