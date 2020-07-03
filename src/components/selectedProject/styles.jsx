@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
 import * as colors from '../../utils'
-import { Autorenew } from '@material-ui/icons'
 
 export const useStyles = makeStyles(theme => ({
   projectContainer: {
@@ -32,12 +31,14 @@ export const useStyles = makeStyles(theme => ({
   },
   taskContainer: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
-    margin: 'auto',
+    width: '100%',
     padding: 20
   },
   taskCardRoot: {
-    maxWidth: 345
+     width: '100%',
+     marginBottom: 14
   },
   cardViewButton: {
     justifyContent: 'flex-end'

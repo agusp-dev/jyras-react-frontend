@@ -3,7 +3,7 @@ import { useStyles } from './styles'
 import { projectsService } from '../../service'
 import { ProjectCard } from './ProjectCard'
 import { AddProject } from '../alerts/addProject/AddProject'
-import { AddButton } from './AddButton'
+import { AddButton } from '../common/addButton/AddButton'
 import { Grid, Typography } from '@material-ui/core'
 import { Redirect } from 'react-router'
 
@@ -58,14 +58,14 @@ const ProjectList = () => {
     const name = e.target.name.value
     const description = e.target.description.value
     const userEmail = getUserEmail()
+    const newProject = {
+      name, 
+      description,
+      tasks: [],
+      members: [],
+      email: userEmail
+    }
     try {
-      const newProject = {
-        name, 
-        description,
-        tasks: [],
-        members: [],
-        email: userEmail
-      }
       await projectsService.saveNewProject(newProject, onProjectSavedCallback)
     } catch(error) {
       alert(error)
@@ -115,7 +115,7 @@ const ProjectList = () => {
               </Typography>)}
         </Grid>
       </Grid>
-      <AddButton handleClickAddProject={handleClickAddProject}/>
+      <AddButton handleClickCallback={handleClickAddProject}/>
       {openAddProjectModal && (
         <AddProject 
           open={openAddProjectModal} 

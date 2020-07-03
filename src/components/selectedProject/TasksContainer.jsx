@@ -14,7 +14,8 @@ const TasksContainer = ({type, tasks}) => {
           tasks.map(t => {
             return <TaskCard
                       key={t.id} 
-                      task={t}/>
+                      task={t}
+                      onTaskSelected/>
           })
         ) : (
           <Typography 

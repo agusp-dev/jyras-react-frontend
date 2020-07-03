@@ -4,15 +4,15 @@ import { Fab } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
 import { useStyles } from './styles'
  
-const AddButton = ({handleClickAddProject}) => {
+const AddButton = ({handleClickCallback}) => {
   
   const classes = useStyles()
 
   return (
     <Fab
-      className={classes.AddButton}
+      className={classes.root}
       title='New Project'
-      onClick={handleClickAddProject}
+      onClick={handleClickCallback}
     >
       <Add />
     </Fab>
@@ -20,7 +20,7 @@ const AddButton = ({handleClickAddProject}) => {
 }
 
 AddButton.propTypes = {
-  handleClickAddProject: PropTypes.func.isRequired
+  handleClickCallback: PropTypes.func.isRequired
 }
 
 export { AddButton }

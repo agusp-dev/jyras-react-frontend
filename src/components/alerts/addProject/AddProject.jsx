@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
+import React from 'react'
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 const AddProject = ({open, handleClose, handleSaveNewProject}) => {
@@ -10,9 +10,6 @@ const AddProject = ({open, handleClose, handleSaveNewProject}) => {
         <DialogTitle id='form-dialog-title'>New Project</DialogTitle>
         <form onSubmit={handleSaveNewProject}>
           <DialogContent>
-            {/* <DialogContentText>
-              Please complete all fields.
-            </DialogContentText> */}
             <TextField 
               autoFocus
               margin='dense'

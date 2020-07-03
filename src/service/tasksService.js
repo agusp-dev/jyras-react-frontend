@@ -1,7 +1,6 @@
 import { firebaseApp } from '../utils'
 
 const getTasksData = (projectId, callback) => {
-	console.log(projectId)
 	const dRef = firebaseApp.db().collection('tasks')
 	dRef
 		.where('projectId', '==', projectId)
@@ -29,6 +28,30 @@ const getTasksData = (projectId, callback) => {
 		})
 }
 
+const saveNewTask = ( task, callback ) => {
+  const dRef = firebaseApp.db().collection('tasks')
+  dRef
+    .add(task)
+    .then(docRef => {
+      callback({
+        type: 0,
+        task: {
+          id: docRef.id,
+          ...task
+        },
+        msg: null
+      })
+    })
+    .catch(error => {
+      callback({
+        type: 1,
+        task: null,
+        msg: error.message
+      })
+    })
+}
+
 export const tasksService = {
-	getTasksData
+  getTasksData,
+  saveNewTask
 }
