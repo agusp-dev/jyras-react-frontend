@@ -3,38 +3,37 @@ import { SelectedProjectTasksContainer } from './SelectedProjectTasksContainer'
 import { useStyles } from './styles'
 import { Header } from '../'
 import { Redirect } from 'react-router'
+import PropTypes from 'prop-types'
 
 const SelectedProject = props => {
 
-  const classes = useStyles()
+	const classes = useStyles()
+	
+	const returnToIndex = () => {
+		return <Redirect to='/'/> 
+	}
 
   /**
    * Avoid manual routing
    */
-  let sProject
-  if (props.location && props.location.state) {
-    sProject = Object.assign({}, props.location.state)
-  }
-  if (!sProject) {
-    return <Redirect to='/'/>
-  }
+  if (props.location && props.location.state) returnToIndex()
+	const { id, name } = props.location.state
+	if (!id || !name) returnToIndex()
 
-  const onReturn = () => {
+  const onBackButtonClick = () => {
     if (props.history) {
       props.history.goBack()
     }
   }
-
-  const { id, name, description, tasks, members } = sProject
 
   return (
     <div>
       <Header 
         title={name || 'No Title'}
         backButton={true}
-        backAction={onReturn} 
+        backAction={onBackButtonClick} 
       />
-      <SelectedProjectTasksContainer />
+      <SelectedProjectTasksContainer projectId={id} />
     </div>
   )
 }

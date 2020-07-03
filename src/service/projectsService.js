@@ -3,16 +3,19 @@ import { firebaseApp } from '../utils'
 const getProjectsData = (email, callback) => {
   const dRef = firebaseApp.db().collection('projects')
   dRef
-    .where('email', '==', email)
+		.where('email', '==', email)
     .get()
     .then(querySnapshot => {
       const projects = []
       querySnapshot.forEach( doc => {
+				const { name, description, email } = doc.data()
         projects.push({
           id: doc.id,
-          ...doc.data()
+					name,
+					description,
+					email
         })
-      })
+			})
       callback({
         type: 0,
         projects,

@@ -11,7 +11,7 @@ const ProjectList = () => {
 
   const classes = useStyles()
   const [openAddProjectModal, setOpenAddProjectModal] = useState(false)
-  const [selectedProject, navigateToSelectedProject] = useState(undefined)
+  const [selectedProject, setSelectedProject] = useState(undefined)
   
   const [projects, setProjects] = useState(undefined)
   useEffect(() => {
@@ -41,19 +41,13 @@ const ProjectList = () => {
     }
   }
 
-  const onSelectedProject = id => {
-    //todo
-    
-    // const sProject = projects.find( s => s.id === id )
-    // if (!sProject) return
-    // goToSelectedProject(sProject)
+  const onSelectedProject = ( id, name ) => {    
+    goToSelectedProject({id, name})
   }
 
   const goToSelectedProject = project => {
-    navigateToSelectedProject(project)
+    setSelectedProject(project)
   }
-
-
 
   const handleClickAddProject = () => {
     setOpenAddProjectModal(true)
@@ -95,20 +89,13 @@ const ProjectList = () => {
     return (
       <Redirect push to={{
         pathname: '/project',
-        state: {
-          id: selectedProject.id,
-          name: selectedProject.name,
-          description: selectedProject.description,
-          tasks: selectedProject.tasks,
-          members: selectedProject.members
-        }
+        state: {...selectedProject}
       }} />
     )
   }
 
   return (
     <Grid container>
-      {console.log('projectList render', openAddProjectModal)}
       <Grid xs={12} item>
         <Grid container justify='flex-start' spacing={3}>
           {projects && projects.length > 0 ? (
@@ -119,8 +106,6 @@ const ProjectList = () => {
                     id={p.id}
                     name={p.name}
                     description={p.description}
-                    tasks={p.tasks}
-                    members={p.members}
                     onSelectedProject={onSelectedProject} />  
                 </Grid>
               )

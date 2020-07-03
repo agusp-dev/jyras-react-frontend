@@ -1,12 +1,29 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { tasksService } from '../../service'
 import { useStyles } from './styles'
 import { Grid, Paper, Typography, Divider } from '@material-ui/core'
 
+const SelectedProjectTasksContainer = ({projectId}) => {
 
+	const classes = useStyles()
 
-const SelectedProjectTasksContainer = () => {
+	const [tasks, setTasks] = useState(undefined)
+	useEffect(() => {
+		getTasks()
+	}, [])
+	
+	const getTasks = async () => {
+		await tasksService.getTasksData(projectId, onGetTasks)
+	}
 
-  const classes = useStyles()
+	const onGetTasks = result => {
+		const { type, tasks, msg } = result
+		if (type === 0) {
+			setTasks(tasks)
+		} else {
+			alert(msg)
+		}
+	}
 
   return(
     <div className={classes.projectContainer}>
