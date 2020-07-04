@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { useStyles } from './styles'
 import { Grid, Typography } from '@material-ui/core'
 
-const TasksContainer = ({type, tasks}) => {
+const TasksContainer = ({tasks, onSelectedTask}) => {
   const classes = useStyles()
 
   return (
@@ -15,7 +15,7 @@ const TasksContainer = ({type, tasks}) => {
             return <TaskCard
                       key={t.id} 
                       task={t}
-                      onTaskSelected/>
+                      onSelectedTask={onSelectedTask}/>
           })
         ) : (
           <Typography 
@@ -30,8 +30,8 @@ const TasksContainer = ({type, tasks}) => {
 }
 
 TasksContainer.propTypes = {
-  type: PropTypes.number.isRequired,
-  tasks: PropTypes.array.isRequired
+  tasks: PropTypes.array.isRequired,
+  onSelectedTask: PropTypes.func.isRequired
 }
 
 export { TasksContainer }

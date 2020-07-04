@@ -5,28 +5,39 @@ import { Button, TextField, Dialog, DialogActions,
 import PropTypes from 'prop-types'
 import { useStyles } from './styles'
 
-const AddTask = ({open, handleClose, handleSaveNewTask}) => {
+const AddTask = ({task, open, handleClose, handleSave}) => {
 
   const classes = useStyles()
 
-  const [storyPoints, setStoryPoints] = useState('')
-
+  const [storyPoints, setStoryPoints] = useState(task ? task.storyPoints : '')
   const handleStoryPointsChange = event => {
     event.preventDefault()
     setStoryPoints(event.target.value)
   }
 
+  const [taskState, setTaskState] = useState(task ? task.state : '')
+  const handleTaskStateChange = event => {
+    event.preventDefault()
+    setTaskState(event.target.value)
+  }
+
+  const onSubmit = e => {
+    e.preventDefault()
+    handleSave(e, (task ? task.id : undefined))
+  }
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-          <DialogTitle id='form-dialog-title'>New Task</DialogTitle>
-          <form onSubmit={handleSaveNewTask}>
+        <DialogTitle id='form-dialog-title'>{task ? 'Task Selected' : 'New Task'}</DialogTitle>
+          <form onSubmit={onSubmit}>
             <DialogContent>
               <TextField 
                 autoFocus
                 margin='dense'
                 id='name'
                 label='Name'
+                defaultValue={task ? task.name : ''}
                 required
                 fullWidth
               />
@@ -34,6 +45,7 @@ const AddTask = ({open, handleClose, handleSaveNewTask}) => {
                 margin='dense'
                 id='description'
                 label='Description'
+                defaultValue={task ? task.description : ''}
                 required
                 fullWidth
               />
@@ -58,24 +70,33 @@ const AddTask = ({open, handleClose, handleSaveNewTask}) => {
                 margin='dense'
                 id='pHours'
                 label='Planned Hours'
+                defaultValue={task ? task.plannedHours : ''}
                 fullWidth
                 required
               />
-              <TextField 
-                margin='dense'
-                id='state'
-                label='State'
-                defaultValue='0 - TO DO'
-                fullWidth
-                disabled
-              />
+              <FormControl className={classes.formControl}>
+                <InputLabel id='state'>State</InputLabel>
+                  <Select
+                    name='tState'
+                    id='tState'
+                    labelId='state'
+                    value={!taskState ? 0 : taskState}
+                    required
+                    disabled={!task}
+                    onChange={handleTaskStateChange}
+                  >
+                    <MenuItem value={0}>0 - TO DO</MenuItem>
+                    <MenuItem value={1}>1 - IN PROGRESS</MenuItem>
+                    <MenuItem value={2}>2 - DONE</MenuItem>
+                  </Select>
+              </FormControl>
               <TextField 
                 margin='dense'
                 id='wHours'
                 label='Worked hours'
-                defaultValue='0'
+                defaultValue={task ? task.workedHours : '0'}
+                disabled={!task}
                 fullWidth
-                disabled
               />
 
             </DialogContent>
@@ -96,7 +117,7 @@ const AddTask = ({open, handleClose, handleSaveNewTask}) => {
 AddTask.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  handleSaveNewTask: PropTypes.func.isRequired
+  handleSave: PropTypes.func.isRequired
 }
 
 export { AddTask }

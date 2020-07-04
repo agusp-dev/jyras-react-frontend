@@ -18,7 +18,7 @@ const TaskCard = ({task, onSelectedTask}) => {
           </Typography>
         </CardContent>
         <CardActions className={classes.cardViewButton}> 
-          <Button size='small' color='primary' onClick={() => console.log('on task clicked')}>
+          <Button size='small' color='primary' onClick={() => onSelectedTask(task.id)}>
             View
           </Button>
         </CardActions>  

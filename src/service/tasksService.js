@@ -28,19 +28,46 @@ const getTasksData = (projectId, callback) => {
 		})
 }
 
-const saveNewTask = ( task, callback ) => {
+const saveNewTask = (task, callback) => {
   const dRef = firebaseApp.db().collection('tasks')
   dRef
     .add(task)
     .then(docRef => {
+      callback(
+        true, {
+          type: 0,
+          task: {
+            id: docRef.id,
+            ...task
+          },
+          msg: null
+        }
+      )
+    })
+    .catch(error => {
       callback({
-        type: 0,
-        task: {
-          id: docRef.id,
-          ...task
-        },
-        msg: null
+        type: 1,
+        task: null,
+        msg: error.message
       })
+    })
+}
+
+const updateTask = (id, task, callback) => {
+  const dRef = firebaseApp.db().collection('tasks').doc(id)
+  dRef
+    .set(task)
+    .then(() => {
+      callback(
+        false, {
+          type: 0,
+          task: {
+            id,
+            ...task
+          },
+          msg: null
+        }
+      )
     })
     .catch(error => {
       callback({
@@ -53,5 +80,6 @@ const saveNewTask = ( task, callback ) => {
 
 export const tasksService = {
   getTasksData,
-  saveNewTask
+  saveNewTask,
+  updateTask
 }
