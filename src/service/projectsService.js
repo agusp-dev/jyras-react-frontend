@@ -54,7 +54,28 @@ const saveNewProject = (project, callback) => {
     })
 }
 
+const updateProject = (id, project, callback) => {
+  const dRef = firebaseApp.db().collection('projects').doc(id)
+  dRef
+    .update(project)
+    .then(() => {
+      callback({
+        type: 0,
+        project,
+        msg: null
+      })
+    })
+    .catch(error => {
+      callback({
+        type: 1,
+        project: null,
+        msg: error.message
+      })
+    })
+}
+
 export const projectsService = {
   getProjectsData,
-  saveNewProject
+  saveNewProject,
+  updateProject
 }

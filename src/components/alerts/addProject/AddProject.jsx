@@ -2,19 +2,20 @@ import React from 'react'
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
-const AddProject = ({open, handleClose, handleSaveNewProject}) => {
+const AddProject = ({project, open, handleClose, handleSave}) => {
 
   return (
     <div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id='form-dialog-title'>New Project</DialogTitle>
-        <form onSubmit={handleSaveNewProject}>
+        <DialogTitle id='form-dialog-title'>{project ? 'Edit Project' : 'New Project'}</DialogTitle>
+        <form onSubmit={handleSave}>
           <DialogContent>
             <TextField 
               autoFocus
               margin='dense'
               id='name'
               label='Name'
+              defaultValue={project ? project.name : ''}
               required
               fullWidth
             />
@@ -22,6 +23,7 @@ const AddProject = ({open, handleClose, handleSaveNewProject}) => {
               margin='dense'
               id='description'
               label='Description'
+              defaultValue={project ? project.description : ''}
               required
               fullWidth
             />
@@ -43,7 +45,7 @@ const AddProject = ({open, handleClose, handleSaveNewProject}) => {
 AddProject.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  handleSaveNewProject: PropTypes.func.isRequired
+  handleSave: PropTypes.func.isRequired
 }
 
 export { AddProject }

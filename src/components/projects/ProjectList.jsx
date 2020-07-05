@@ -94,7 +94,7 @@ const ProjectList = () => {
     return (
       <Redirect push to={{
         pathname: '/project',
-        state: {...selectedProject}
+        state: {project: selectedProject}
       }} />
     )
   }
@@ -130,10 +130,11 @@ const ProjectList = () => {
 
       <AddButton handleClickCallback={handleClickAddProject}/>
       {openAddProjectModal && (
-        <AddProject 
+        <AddProject
+          project={undefined}
           open={openAddProjectModal} 
           handleClose={() => setOpenAddProjectModal(false)}
-          handleSaveNewProject={handleSaveNewProject}
+          handleSave={handleSaveNewProject}
         />
       )}
       

@@ -17,6 +17,10 @@ export const useStyles = makeStyles(theme => ({
     marginLeft: 24,
     font: '18px Montserrat'
   },
+  editButton: {
+    marginLeft: 8,
+    
+  },
   todoTaskTitle: {
     padding: 12,
     textAlign: 'center',
