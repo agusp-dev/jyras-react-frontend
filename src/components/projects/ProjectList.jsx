@@ -4,12 +4,14 @@ import { projectsService } from '../../service'
 import { ProjectCard } from './ProjectCard'
 import { AddProject } from '../alerts/addProject/AddProject'
 import { AddButton } from '../common/addButton/AddButton'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, CircularProgress } from '@material-ui/core'
 import { Redirect } from 'react-router'
+
 
 const ProjectList = () => {
 
   const classes = useStyles()
+  const [showProgress, setProgress] = useState(false)
   const [openAddProjectModal, setOpenAddProjectModal] = useState(false)
   const [selectedProject, setSelectedProject] = useState(undefined)
   
@@ -19,11 +21,13 @@ const ProjectList = () => {
   }, [])
 
   const getProjects = async () => {
+    setProgress(true)
     const email = getUserEmail()
     try {
       await projectsService.getProjectsData(email, onGetProjects)
     } catch(error) {
       alert(error.message)
+      setProgress(false)
     }
   }
 
@@ -39,6 +43,7 @@ const ProjectList = () => {
     } else {
       alert(msg)
     }
+    setProgress(false)
   }
 
   const onSelectedProject = ( id, name ) => {    
@@ -96,25 +101,33 @@ const ProjectList = () => {
 
   return (
     <Grid container>
+
       <Grid xs={12} item>
-        <Grid container justify='flex-start' spacing={3}>
-          {projects && projects.length > 0 ? (
-            projects.map(p => {
-              return (
-                <Grid key={p.id} item={true} xs={12} sm={3}>  
-                  <ProjectCard 
-                    id={p.id}
-                    name={p.name}
-                    description={p.description}
-                    onSelectedProject={onSelectedProject} />  
-                </Grid>
-              )
-            })
-          ) : (<Typography>
-                No Projects yet. Please, add one.
-              </Typography>)}
-        </Grid>
+        {showProgress ? (
+          <div className={classes.progressContainer}>
+            <CircularProgress className={classes.progress}/>
+          </div>
+        ) : (
+          <Grid container justify='flex-start' spacing={3}>
+            {projects && projects.length > 0 ? (
+              projects.map(p => {
+                return (
+                  <Grid key={p.id} item={true} xs={12} sm={3}>  
+                    <ProjectCard 
+                      id={p.id}
+                      name={p.name}
+                      description={p.description}
+                      onSelectedProject={onSelectedProject} />  
+                  </Grid>
+                )
+              })
+            ) : (<Typography>
+                  No Projects yet. Please, add one.
+                </Typography>)}
+          </Grid>
+        )}
       </Grid>
+
       <AddButton handleClickCallback={handleClickAddProject}/>
       {openAddProjectModal && (
         <AddProject 
@@ -123,6 +136,7 @@ const ProjectList = () => {
           handleSaveNewProject={handleSaveNewProject}
         />
       )}
+      
     </Grid>
   )
 }
