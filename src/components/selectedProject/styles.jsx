@@ -5,6 +5,18 @@ export const useStyles = makeStyles(theme => ({
   projectContainer: {
     flexGrow: 1
   },
+  header: {
+    marginBottom: '40px'
+  },
+  headerTitle: {
+    color: colors.MAIN_GREEN,
+    font: 'Bold 32px Montserrat'
+  },
+  headerDescription: {
+    marginTop: 14,
+    marginLeft: 24,
+    font: '18px Montserrat'
+  },
   todoTaskTitle: {
     padding: 12,
     textAlign: 'center',

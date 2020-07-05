@@ -1,7 +1,7 @@
 import React from 'react'
 import { SelectedProjectTasksContainer } from './SelectedProjectTasksContainer'
 import { useStyles } from './styles'
-import { Header } from '../'
+import { Header } from './Header'
 import { Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 
@@ -17,7 +17,7 @@ const SelectedProject = props => {
    * Avoid manual routing
    */
   if (props.location && props.location.state) returnToIndex()
-	const { id, name } = props.location.state
+	const { id, name, description } = props.location.state
 	if (!id || !name) returnToIndex()
 
   const onBackButtonClick = () => {
@@ -30,6 +30,7 @@ const SelectedProject = props => {
     <div>
       <Header 
         title={name || 'No Title'}
+        description={description || 'No Description'}
         backButton={true}
         backAction={onBackButtonClick} 
       />

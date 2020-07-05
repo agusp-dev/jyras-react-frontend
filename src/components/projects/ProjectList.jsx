@@ -46,8 +46,8 @@ const ProjectList = () => {
     setProgress(false)
   }
 
-  const onSelectedProject = ( id, name ) => {    
-    goToSelectedProject({id, name})
+  const onSelectedProject = ( id, name, description ) => {    
+    goToSelectedProject({id, name, description})
   }
 
   const goToSelectedProject = project => {

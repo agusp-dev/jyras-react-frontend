@@ -18,7 +18,7 @@ const ProjectCard = ({id, name, description, onSelectedProject}) => {
         </Typography>
       </CardContent>
       <CardActions className={classes.cardViewButton}> 
-        <Button size='small' color='primary' onClick={() => onSelectedProject(id, name)}>
+        <Button size='small' color='primary' onClick={() => onSelectedProject(id, name, description)}>
           View
         </Button>
       </CardActions>  
