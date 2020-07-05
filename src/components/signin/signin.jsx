@@ -1,13 +1,15 @@
 import React, { useCallback, useState } from 'react'
 import { Copyright } from '../../components'
 import Logo from '../../assets/logo/logo.svg'
-import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core'
+import { Button, CssBaseline, TextField, FormControlLabel, 
+  Checkbox, Link, Paper, Box, Grid, CircularProgress } from '@material-ui/core'
 import { useStyles } from './styles'
 import { userAuthService, userService } from '../../service'
 import { Redirect } from 'react-router-dom'
 
 const Signin = () => {
   const classes = useStyles()
+  const [showProgress, setProgress] = useState(false)
   const [isLogged, setLoggedIn] = useState(false)
 
   const onSigninCallback = result => {
@@ -15,7 +17,8 @@ const Signin = () => {
     if (type === 0) {
       getFirebaseUserData(loggedUser)
     } else {
-      alert( msg )
+      alert(msg)
+      setProgress(false)
     }
   }
 
@@ -24,17 +27,20 @@ const Signin = () => {
       await userService.getUserData(loggedUser, onGetUserCallback)
     } catch (error) {
       alert(error)
+      setProgress(false)
     }
   }
 
   const handleLogin = useCallback(
     async event => {
+      setProgress(true)
       event.preventDefault()
       const { email, password } = event.target.elements
       try {
         await userAuthService.firebaseLogin(email.value, password.value, onSigninCallback)
       } catch (error) {
         alert(error)
+        setProgress(false)
       }
     }
   )
@@ -47,6 +53,7 @@ const Signin = () => {
     } else {
       alert(msg)
     }
+    setProgress(false)
   }
 
   /**
@@ -92,15 +99,26 @@ const Signin = () => {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
+
+            {showProgress 
+              ? (
+                <div className={classes.progressContainer}>
+                  <CircularProgress
+                    className={classes.progress}/>
+                </div>
+              )
+              : (
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign In
+                </Button>
+              )}
+
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

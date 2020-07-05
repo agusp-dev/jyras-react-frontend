@@ -51,5 +51,14 @@ export const useStyles = makeStyles(theme => ({
     '&:focus': {
       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
     }
+  },
+  progressContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: theme.spacing(3, 0, 2),
+  },
+  progress: {
+    margin: 'auto',
+    color: color.MAIN_GREEN
   }
 }))
