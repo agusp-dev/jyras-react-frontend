@@ -6,6 +6,7 @@ export const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   header: {
+    flexGrow: 1,
     marginBottom: '40px'
   },
   headerTitle: {
@@ -20,6 +21,9 @@ export const useStyles = makeStyles(theme => ({
   editButton: {
     marginLeft: 8,
     
+  },
+  headerMembers: {
+    display: 'flex'
   },
   todoTaskTitle: {
     padding: 12,

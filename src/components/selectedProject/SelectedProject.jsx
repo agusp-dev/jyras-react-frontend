@@ -9,8 +9,43 @@ import { projectsService } from '../../service'
 const SelectedProject = props => {
 
   const classes = useStyles()
+
+  //test members
+  let members = [
+    {
+      id: '11111',
+      name: 'Agustin',
+      surname: 'Perez',
+      email: 'perezp.agustin@gmail.com'
+    },
+    {
+      id: '22222',
+      name: 'Nicolas',
+      surname: 'Monetto',
+      email: 'nmonetto@gmail.com'
+    },
+    {
+      id: '3333333',
+      name: 'Martin',
+      surname: 'Diaz',
+      email: 'mdiaz@gmail.com'
+    },
+    {
+      id: '444444',
+      name: 'Cristina',
+      surname: 'Kirchner',
+      email: 'cristinita@gmail.com'
+    },
+    {
+      id: '555555',
+      name: 'Mauricio',
+      surname: 'Macri',
+      email: 'mcat@gmail.com'
+    }
+  ]
   
   const [openEditAlert, setEditAlert] = useState(false)
+  const [membersView, changeToMembersScreen] = useState(false)
 	
 	const returnToIndex = () => {
 		return <Redirect to='/'/> 
@@ -67,6 +102,11 @@ const SelectedProject = props => {
     }
   }
 
+  //members edit button
+  const onHandleMembersEditButtonClick = () => {
+    changeToMembersScreen(true)
+  }
+
   return (
     <div>
       {selectedProject && (
@@ -74,8 +114,10 @@ const SelectedProject = props => {
           <Header 
             title={selectedProject ? selectedProject.name : ''}
             description={selectedProject ? selectedProject.description : ''}
+            members={members || []}
             backAction={onBackButtonClick}
             handleEditClick={onHandleEditButtonClick}
+            handleMembersEdit={onHandleMembersEditButtonClick}
           />
           <SelectedProjectTasksContainer projectId={selectedProject.id} />
           {openEditAlert && (
