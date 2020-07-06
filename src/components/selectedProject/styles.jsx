@@ -25,6 +25,12 @@ export const useStyles = makeStyles(theme => ({
   headerMembers: {
     display: 'flex'
   },
+  headerRemoveContent: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'center'
+  },
+
   todoTaskTitle: {
     padding: 12,
     textAlign: 'center',

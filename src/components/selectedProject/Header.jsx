@@ -1,8 +1,8 @@
 import React from 'react'
 import { HeaderMembers } from './HeaderMembers'
 import PropTypes from 'prop-types'
-import { Grid, Typography, IconButton } from '@material-ui/core'
-import { Edit } from '@material-ui/icons'
+import { Grid, Typography, IconButton, Button } from '@material-ui/core'
+import { Edit, Delete } from '@material-ui/icons'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { useStyles } from './styles'
 
@@ -26,8 +26,15 @@ const Header = ({title, description, members, backAction, handleEditClick, handl
             members={members}
             onHandleMembersEdit={handleMembersEdit}/>
         </Grid>
-        <Grid item xs>
-          REMOVE
+        <Grid item xs className={classes.headerRemoveContent}>
+          <Button 
+            variant='outlined' 
+            color='secondary'
+            startIcon={<Delete />}
+            onClick={() => console.log('Remove project click')}
+          >
+            Remove
+          </Button>
         </Grid>
       </Grid>
       <Typography className={classes.headerDescription} color='textSecondary' component='p'>
