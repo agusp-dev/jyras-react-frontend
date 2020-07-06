@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { SelectedProjectTasksContainer } from './SelectedProjectTasksContainer'
 import { AddProject } from '../alerts/addProject/AddProject'
+import { ProjectMembers } from '../alerts/projectMembers/ProjectMembers'
 import { useStyles } from './styles'
 import { Header } from './Header'
 import { Redirect } from 'react-router'
@@ -45,7 +46,7 @@ const SelectedProject = props => {
   ]
   
   const [openEditAlert, setEditAlert] = useState(false)
-  const [membersView, changeToMembersScreen] = useState(false)
+  const [openMembersAlert, setMembersAlert] = useState(false)
 	
 	const returnToIndex = () => {
 		return <Redirect to='/'/> 
@@ -104,7 +105,7 @@ const SelectedProject = props => {
 
   //members edit button
   const onHandleMembersEditButtonClick = () => {
-    changeToMembersScreen(true)
+    setMembersAlert(true)
   }
 
   return (
@@ -127,6 +128,12 @@ const SelectedProject = props => {
               handleClose={() => setEditAlert(false)}
               handleSave={onHandleSave}
             />
+          )}
+          {openMembersAlert && (
+            <ProjectMembers
+              open={openMembersAlert}
+              handleClose={() => setMembersAlert(false)}
+              members={members}/>
           )}
         </div>
       )}
