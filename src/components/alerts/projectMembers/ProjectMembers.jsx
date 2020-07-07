@@ -1,14 +1,35 @@
 import React, { useState } from 'react'
+import { AddMemberButton } from './AddMemberButton'
 import { Dialog, DialogActions, 
   DialogContent, DialogTitle, Button, 
   Table, TableBody, TableCell, 
   TableContainer, TableHead, TableRow, Paper, Avatar } from '@material-ui/core'
 import { useStyles } from './styles'
 import PropTypes from 'prop-types'
+import { AddMember } from '../addMember/AddMember'
 
 const ProjectMembers = ({members, open, handleClose}) => {
 
   const classes = useStyles()
+
+  const [showNewUserAlert, openNewUserAlert] = useState(false)
+
+  const onHandleNewMemberClick = () => {
+    openNewUserAlert(true)
+  }
+
+  const onHandleNewMemberSave = e => {
+    e.preventDefault()
+    const email = e.target.email.value
+    const name = e.target.name.value
+    const surname = e.target.surname.value
+    addNewUser(email, name, surname)
+    openNewUserAlert(false)
+  }
+
+  const addNewUser = (e, n, s) => {
+    console.log(e, n, s)
+  }
 
   return (
     <div>
@@ -20,7 +41,6 @@ const ProjectMembers = ({members, open, handleClose}) => {
         aria-labelledby="form-dialog-title">
         <DialogTitle id='form-dialog-title'>Project Users</DialogTitle>
         <DialogContent>
-
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
@@ -51,17 +71,22 @@ const ProjectMembers = ({members, open, handleClose}) => {
                   })}
                 </TableBody>
               ) : 'No Users'}
-              
             </Table>
           </TableContainer>
-
         </DialogContent>
-
-        <DialogActions>
-          <Button onClick={handleClose} color='primary'>
-            CLOSE
-          </Button>
+        <DialogActions className={classes.memberButtonContent}>
+            <AddMemberButton handleClickCallback={onHandleNewMemberClick}/>
+            <Button onClick={handleClose} color='primary'>
+              CLOSE
+            </Button>
         </DialogActions>
+
+        {showNewUserAlert && (
+          <AddMember
+            open={showNewUserAlert}
+            handleClose={() => openNewUserAlert(false)}
+            handleSave={onHandleNewMemberSave} />
+        )}
           
       </Dialog>
     </div>

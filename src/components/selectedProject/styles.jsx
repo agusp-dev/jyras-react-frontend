@@ -30,7 +30,6 @@ export const useStyles = makeStyles(theme => ({
     alignItems: 'flex-start',
     justifyContent: 'center'
   },
-
   todoTaskTitle: {
     padding: 12,
     textAlign: 'center',
