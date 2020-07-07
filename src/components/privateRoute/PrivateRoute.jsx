@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { MenuAppBar } from '..'
+import PropTypes from 'prop-types'
 
-const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
+const PrivateRoute = ({routes, component: RouteComponent, ...rest }) => {
   
   let user = localStorage.getItem('user')
   if (user) {
@@ -15,7 +16,8 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
       render={routeProps => 
         !!user ? (
           <Fragment>
-            <MenuAppBar 
+            <MenuAppBar
+              routes={routes}
               name={user.name}
               surname={user.surname} />
             <RouteComponent {...routeProps} />
@@ -26,6 +28,10 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
       }
     />
   )
+}
+
+PrivateRoute.propTypes = {
+  routes: PropTypes.array.isRequired
 }
 
 export { PrivateRoute }
