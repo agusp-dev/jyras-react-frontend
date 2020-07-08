@@ -20,4 +20,12 @@ export const useStyles = makeStyles(theme => ({
     },
     color: colors.WHITE
   },
+  autocompleteContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+  autocomplete: {
+    width: 400,
+    marginBottom: theme.spacing(3),
+  }
 }))

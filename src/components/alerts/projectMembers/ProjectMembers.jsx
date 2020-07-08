@@ -3,16 +3,30 @@ import { AddMemberButton } from './AddMemberButton'
 import { Dialog, DialogActions, 
   DialogContent, DialogTitle, Button, 
   Table, TableBody, TableCell, 
-  TableContainer, TableHead, TableRow, Paper, Avatar } from '@material-ui/core'
+  TableContainer, TableHead, TableRow, 
+  Paper, Avatar, Grid } from '@material-ui/core'
 import { useStyles } from './styles'
 import PropTypes from 'prop-types'
 import { AddMember } from '../addMember/AddMember'
+import { userService } from '../../../service'
+import { MembersFilter } from './MembersFilter'
 
 const ProjectMembers = ({members, open, handleClose}) => {
 
   const classes = useStyles()
 
   const [showNewUserAlert, openNewUserAlert] = useState(false)
+  const [filteredUsers, setFilteredUsers] = useState([])
+  
+  const onGetAllUsers = result => {
+    const { type, users, msg } = result
+    if (type !== 0) {
+      alert(msg)
+      return
+    }
+    setFilteredUsers(users)
+  }
+  userService.getAllUsers(onGetAllUsers)
 
   const onHandleNewMemberClick = () => {
     openNewUserAlert(true)
@@ -31,6 +45,11 @@ const ProjectMembers = ({members, open, handleClose}) => {
     console.log(e, n, s)
   }
 
+  const handleMemberSelected = (e, user) => {
+    //TODO
+    console.log(user)
+  }
+
   return (
     <div>
       <Dialog
@@ -41,6 +60,15 @@ const ProjectMembers = ({members, open, handleClose}) => {
         aria-labelledby="form-dialog-title">
         <DialogTitle id='form-dialog-title'>Project Users</DialogTitle>
         <DialogContent>
+
+          <Grid container className={classes.autocompleteContainer}>
+            <MembersFilter 
+              members={filteredUsers}
+              onMemberSelected={handleMemberSelected}/>
+          </Grid>
+          
+          
+
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
@@ -75,18 +103,18 @@ const ProjectMembers = ({members, open, handleClose}) => {
           </TableContainer>
         </DialogContent>
         <DialogActions className={classes.memberButtonContent}>
-            <AddMemberButton handleClickCallback={onHandleNewMemberClick}/>
+            {/* <AddMemberButton handleClickCallback={onHandleNewMemberClick}/> */}
             <Button onClick={handleClose} color='primary'>
               CLOSE
             </Button>
         </DialogActions>
 
-        {showNewUserAlert && (
+        {/* {showNewUserAlert && (
           <AddMember
             open={showNewUserAlert}
             handleClose={() => openNewUserAlert(false)}
             handleSave={onHandleNewMemberSave} />
-        )}
+        )} */}
           
       </Dialog>
     </div>

@@ -25,7 +25,35 @@ const getUserData = (user, callback) => {
     })
 }
 
+const getAllUsers = (callback) => {
+  const dRef = firebaseApp.db().collection('users')
+  const users = []
+  dRef
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach( u => {
+        users.push({
+          id: u.id,
+          ...u.data()
+        })
+      })
+      callback({
+        type: 0,
+        users,
+        msg: null
+      })
+    })
+    .catch(error => {
+      callback({
+        type: 1,
+        users: null,
+        msg: error.message
+      })
+    })
+}
+
 export const userService = {
-  getUserData
+  getUserData,
+  getAllUsers
 }
 
