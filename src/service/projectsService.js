@@ -8,11 +8,12 @@ const getProjectsData = (email, callback) => {
     .then(querySnapshot => {
       const projects = []
       querySnapshot.forEach( doc => {
-				const { name, description, email } = doc.data()
+				const { name, description, members, email } = doc.data()
         projects.push({
           id: doc.id,
 					name,
-					description,
+          description,
+          members,
 					email
         })
 			})

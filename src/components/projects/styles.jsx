@@ -16,5 +16,8 @@ export const useStyles = makeStyles(theme => ({
   progress: {
     margin: 'auto',
     color: color.MAIN_GREEN
+  },
+  members: {
+    display: 'flex'
   }
 }))

@@ -117,6 +117,7 @@ const ProjectList = () => {
                       id={p.id}
                       name={p.name}
                       description={p.description}
+                      members={p.members}
                       onSelectedProject={onSelectedProject} />  
                   </Grid>
                 )

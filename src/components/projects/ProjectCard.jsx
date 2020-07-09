@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardContent, Typography, Button, CardActions } from '@material-ui/core'
+import { Card, CardContent, Typography, Button, CardActions, Avatar } from '@material-ui/core'
+import { AvatarGroup } from '@material-ui/lab'
 import { useStyles } from './styles'
 
-const ProjectCard = ({id, name, description, onSelectedProject}) => {
+const ProjectCard = ({id, name, description, members, onSelectedProject}) => {
 
   const classes = useStyles()
 
@@ -16,6 +17,20 @@ const ProjectCard = ({id, name, description, onSelectedProject}) => {
         <Typography variant='body2' color='textSecondary' component='p'>
           {description || 'No description'}
         </Typography>
+        <div className={classes.members}>
+          {members && members.length > 0 && (
+            <AvatarGroup max={4}>
+              {members.map(m => {
+                return (
+                  <Avatar 
+                    key={m.id}
+                    alt={`${m.name} ${m.surname}`}
+                    src='no'/>
+                )
+              })}
+            </AvatarGroup>
+          )}
+        </div>
       </CardContent>
       <CardActions className={classes.cardViewButton}> 
         <Button size='small' color='primary' onClick={() => onSelectedProject(id, name, description)}>
@@ -30,6 +45,7 @@ ProjectCard.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  members: PropTypes.array.isRequired,
   onSelectedProject: PropTypes.func.isRequired
 }
 
