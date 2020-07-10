@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardContent, Typography, Button, CardActions, Avatar } from '@material-ui/core'
+import { Card, CardContent, Typography, Button, 
+  CardActions, Avatar, Divider } from '@material-ui/core'
 import { AvatarGroup } from '@material-ui/lab'
 import { useStyles } from './styles'
 
@@ -31,9 +32,10 @@ const ProjectCard = ({id, name, description, members, onSelectedProject}) => {
             </AvatarGroup>
           )}
         </div>
+        <Divider />
       </CardContent>
       <CardActions className={classes.cardViewButton}> 
-        <Button size='small' color='primary' onClick={() => onSelectedProject(id, name, description)}>
+        <Button size='small' color='primary' onClick={() => onSelectedProject(id, name, members, description)}>
           View
         </Button>
       </CardActions>  

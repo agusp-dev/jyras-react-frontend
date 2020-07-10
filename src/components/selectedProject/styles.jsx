@@ -23,7 +23,8 @@ export const useStyles = makeStyles(theme => ({
     
   },
   headerMembers: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center'
   },
   headerRemoveContent: {
     display: 'flex',

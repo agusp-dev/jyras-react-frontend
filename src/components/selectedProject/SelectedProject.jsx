@@ -11,40 +11,6 @@ const SelectedProject = props => {
 
   const classes = useStyles()
 
-  //test members
-  let members = [
-    {
-      id: '11111',
-      name: 'Agustin',
-      surname: 'Perez',
-      email: 'perezp.agustin@gmail.com'
-    },
-    {
-      id: '22222',
-      name: 'Nicolas',
-      surname: 'Monetto',
-      email: 'nmonetto@gmail.com'
-    },
-    {
-      id: '3333333',
-      name: 'Martin',
-      surname: 'Diaz',
-      email: 'mdiaz@gmail.com'
-    },
-    {
-      id: '444444',
-      name: 'Cristina',
-      surname: 'Kirchner',
-      email: 'cristinita@gmail.com'
-    },
-    {
-      id: '555555',
-      name: 'Mauricio',
-      surname: 'Macri',
-      email: 'mcat@gmail.com'
-    }
-  ]
-  
   const [openEditAlert, setEditAlert] = useState(false)
   const [openMembersAlert, setMembersAlert] = useState(false)
 	
@@ -56,7 +22,8 @@ const SelectedProject = props => {
    * Avoid manual routing
    */
   if (props.location && props.location.state) returnToIndex()
-	const { project } = props.location.state
+  const { project } = props.location.state
+  console.log(project)
   if (!project) returnToIndex()
 
   
@@ -113,9 +80,9 @@ const SelectedProject = props => {
       {selectedProject && (
         <div>
           <Header 
-            title={selectedProject ? selectedProject.name : ''}
-            description={selectedProject ? selectedProject.description : ''}
-            members={members || []}
+            title={selectedProject.name}
+            description={selectedProject.description}
+            members={selectedProject.members}
             backAction={onBackButtonClick}
             handleEditClick={onHandleEditButtonClick}
             handleMembersEdit={onHandleMembersEditButtonClick}
@@ -133,7 +100,7 @@ const SelectedProject = props => {
             <ProjectMembers
               open={openMembersAlert}
               handleClose={() => setMembersAlert(false)}
-              members={members}/>
+              members={selectedProject.members}/>
           )}
         </div>
       )}

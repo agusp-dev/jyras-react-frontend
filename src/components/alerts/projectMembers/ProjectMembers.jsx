@@ -67,8 +67,6 @@ const ProjectMembers = ({members, open, handleClose}) => {
               onMemberSelected={handleMemberSelected}/>
           </Grid>
           
-          
-
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
               <TableHead>

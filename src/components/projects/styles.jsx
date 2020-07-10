@@ -18,6 +18,9 @@ export const useStyles = makeStyles(theme => ({
     color: color.MAIN_GREEN
   },
   members: {
-    display: 'flex'
+    display: 'flex',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    justifyContent: 'center'
   }
 }))
