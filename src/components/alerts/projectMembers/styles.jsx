@@ -5,6 +5,18 @@ export const useStyles = makeStyles(theme => ({
   table: {
     minWidth: 650
   },
+  photoRow: {
+    width: '10%'
+  },
+  nameSurnameRow: {
+    width: '20%'
+  },
+  emailRow: {
+    width: '30%'
+  },
+  actionsRow: {
+    width: '20%'
+  },
   memberButtonContent: {
     display: 'flex',
     position: 'relative',
@@ -27,5 +39,8 @@ export const useStyles = makeStyles(theme => ({
   autocomplete: {
     width: 400,
     marginBottom: theme.spacing(3),
+  },
+  selectedUserTable: {
+    marginBottom: theme.spacing(5)
   }
 }))

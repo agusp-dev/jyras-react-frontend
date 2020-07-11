@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { AddMemberButton } from './AddMemberButton'
 import { Dialog, DialogActions, 
-  DialogContent, DialogTitle, Button, 
-  Table, TableBody, TableCell, 
+  DialogContent, DialogTitle, DialogContentText,
+  Button, Table, TableBody, TableCell, 
   TableContainer, TableHead, TableRow, 
-  Paper, Avatar, Grid } from '@material-ui/core'
+  Paper, Avatar, Grid, Typography, 
+  IconButton } from '@material-ui/core'
+import { Check, Delete } from '@material-ui/icons'
 import { useStyles } from './styles'
 import PropTypes from 'prop-types'
 import { AddMember } from '../addMember/AddMember'
@@ -17,6 +19,7 @@ const ProjectMembers = ({members, open, handleClose}) => {
 
   const [showNewUserAlert, openNewUserAlert] = useState(false)
   const [filteredUsers, setFilteredUsers] = useState([])
+  const [selectedUser, setSelectedUser] = useState(undefined)
   
   const onGetAllUsers = result => {
     const { type, users, msg } = result
@@ -46,8 +49,8 @@ const ProjectMembers = ({members, open, handleClose}) => {
   }
 
   const handleMemberSelected = (e, user) => {
-    //TODO
     console.log(user)
+    setSelectedUser(user)
   }
 
   return (
@@ -58,25 +61,67 @@ const ProjectMembers = ({members, open, handleClose}) => {
         open={open} 
         onClose={handleClose} 
         aria-labelledby="form-dialog-title">
-        <DialogTitle id='form-dialog-title'>Project Users</DialogTitle>
+        <DialogTitle id='form-dialog-title'>Project Members</DialogTitle>
         <DialogContent>
+
+          <DialogContentText>
+            Find users and add them as members to your project. If you do not find a user, they must be registered before on our home page.
+          </DialogContentText>
 
           <Grid container className={classes.autocompleteContainer}>
             <MembersFilter 
               members={filteredUsers}
               onMemberSelected={handleMemberSelected}/>
           </Grid>
-          
-          <TableContainer component={Paper}>
+
+          <TableContainer className={classes.selectedUserTable} component={Paper}>
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Photo</TableCell>
-                  <TableCell align='center'>Id</TableCell>
-                  <TableCell align='center'>Name</TableCell>
-                  <TableCell align='center'>Surname</TableCell>
-                  <TableCell align='center'>Email</TableCell>
-                  <TableCell align='center'>Actions</TableCell>
+                  <TableCell className={classes.photoRow}>Photo</TableCell>
+                  <TableCell className={classes.nameSurnameRow} align='center'>Name</TableCell>
+                  <TableCell className={classes.nameSurnameRow} align='center'>Surname</TableCell>
+                  <TableCell className={classes.emailRow} align='center'>Email</TableCell>
+                  <TableCell className={classes.actionsRow} align='right'>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {selectedUser && (
+                  <TableRow key={selectedUser.id}>
+                    <TableCell>
+                      <Avatar alt={`${selectedUser.name} ${selectedUser.surname}`} src='n'/>
+                    </TableCell>
+                    <TableCell align='center'>{selectedUser.name}</TableCell>
+                    <TableCell align='center'>{selectedUser.surname}</TableCell>
+                    <TableCell align='center'>{selectedUser.email}</TableCell>
+                    <TableCell align='right'>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        size='small'
+                        startIcon={ <Check /> }
+                      >
+                        Add
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          
+          <TableContainer component={Paper}>
+            <Typography>
+              Your Project Members
+            </Typography>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                <TableCell className={classes.photoRow}>Photo</TableCell>
+                  <TableCell className={classes.nameSurnameRow} align='center'>Name</TableCell>
+                  <TableCell className={classes.nameSurnameRow} align='center'>Surname</TableCell>
+                  <TableCell className={classes.emailRow} align='center'>Email</TableCell>
+                  <TableCell className={classes.actionsRow} align='right'>Actions</TableCell>
                 </TableRow>
               </TableHead>
               {members.length > 0 ? (
@@ -87,11 +132,19 @@ const ProjectMembers = ({members, open, handleClose}) => {
                         <TableCell>
                           <Avatar alt={`${m.name} ${m.surname}`} src='n'/>
                         </TableCell>
-                        <TableCell align='center'>{m.id}</TableCell>
                         <TableCell align='center'>{m.name}</TableCell>
                         <TableCell align='center'>{m.surname}</TableCell>
                         <TableCell align='center'>{m.email}</TableCell>
-                        <TableCell align='center'>No actions</TableCell>
+                        <TableCell align='right'>
+                          <Button
+                            variant='contained'
+                            color='secondary'
+                            size='small'
+                            startIcon={ <Delete /> }
+                          >
+                            Remove
+                          </Button>
+                        </TableCell>
                       </TableRow>
                     )
                   })}
@@ -99,6 +152,7 @@ const ProjectMembers = ({members, open, handleClose}) => {
               ) : 'No Users'}
             </Table>
           </TableContainer>
+
         </DialogContent>
         <DialogActions className={classes.memberButtonContent}>
             {/* <AddMemberButton handleClickCallback={onHandleNewMemberClick}/> */}

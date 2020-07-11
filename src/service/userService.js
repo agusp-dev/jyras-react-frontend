@@ -33,7 +33,7 @@ const getAllUsers = (callback) => {
     .then(querySnapshot => {
       querySnapshot.forEach( u => {
         users.push({
-          id: u.id,
+          email: u.id,
           ...u.data()
         })
       })

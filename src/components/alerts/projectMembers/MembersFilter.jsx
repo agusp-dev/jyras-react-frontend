@@ -7,16 +7,23 @@ import { useStyles } from './styles'
 const MembersFilter = ({members, onMemberSelected}) => {
   const classes = useStyles()
 
-  // const [value, setValue] = useState(undefined)
-
   return (
     <Autocomplete
       className={classes.autocomplete}
       onChange={onMemberSelected}
       id='members-filter'
       options={members}
-      getOptionLabel={(option) => option.id}
-      renderInput={(params) => <TextField {...params} label="Search Users" variant="outlined" />}
+      getOptionLabel={option => option.email}
+      getOptionSelected={(o, v) => o.value === v.value}
+      renderInput={
+        (params) => 
+          <TextField 
+            {...params} 
+            label="Search Users" 
+            variant="outlined" 
+            inputProps={{...params.inputProps}}
+          />
+      }
     />
   )
 }
