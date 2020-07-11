@@ -75,8 +75,32 @@ const updateProject = (id, project, callback) => {
     })
 }
 
+const saveProjectMember = (id, member, callback) => {
+	console.log('lala', member)
+	const dRef = firebaseApp.db().collection('projects').doc(id)
+	dRef
+		.update({
+			members: firebaseApp.sFirestore.FieldValue.arrayUnion(member)
+		})
+		.then(() => {
+			callback({
+				type: 0,
+				member,
+				msg: null
+			})
+		})
+		.catch(error => {
+			callback({
+				type: 1,
+				member: null,
+				msg: error.message
+			})
+		})
+}
+
 export const projectsService = {
   getProjectsData,
   saveNewProject,
-  updateProject
+	updateProject,
+	saveProjectMember
 }

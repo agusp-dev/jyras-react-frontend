@@ -12,8 +12,9 @@ import PropTypes from 'prop-types'
 import { AddMember } from '../addMember/AddMember'
 import { userService } from '../../../service'
 import { MembersFilter } from './MembersFilter'
+import { projectsService } from '../../../service'
 
-const ProjectMembers = ({members, open, handleClose}) => {
+const ProjectMembers = ({projectId, members, open, handleClose, onAddMember}) => {
 
   const classes = useStyles()
 
@@ -51,7 +52,27 @@ const ProjectMembers = ({members, open, handleClose}) => {
   const handleMemberSelected = (e, user) => {
     console.log(user)
     setSelectedUser(user)
-  }
+	}
+	
+	// const handleAddButtonClick = user => {
+	// 	if ( user && user.email && user.name && user.surname ) {
+	// 		addProjectMember(user)
+	// 	}
+	// }
+
+	// const addProjectMember = member => {
+	// 	projectsService.saveProjectMember(projectId, member, onProjectMemberSaved)
+	// }
+
+	// const onProjectMemberSaved = result => {
+	// 	const { type, msg } = result
+	// 	if (type === 0) {
+
+	// 		setSelectedUser(undefined)
+	// 	} else {
+	// 		alert(msg)
+	// 	}
+	// }
 
   return (
     <div>
@@ -98,7 +119,8 @@ const ProjectMembers = ({members, open, handleClose}) => {
                       <Button
                         variant='contained'
                         color='primary'
-                        size='small'
+												size='small'
+												onClick={() => onAddMember(selectedUser)}
                         startIcon={ <Check /> }
                       >
                         Add
@@ -174,9 +196,11 @@ const ProjectMembers = ({members, open, handleClose}) => {
 }
 
 ProjectMembers.propTypes = {
+	projectId: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  members: PropTypes.array.isRequired
+	members: PropTypes.array.isRequired,
+	onAddMember: PropTypes.func.isRequired
 }
 
 export { ProjectMembers }

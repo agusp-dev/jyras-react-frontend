@@ -14,12 +14,15 @@ const app = firebase.initializeApp({
 let firestore
 const db = () => {
   if (!firestore) {
-    firestore = firebase.firestore(app)
+		firestore = firebase.firestore(app)
   }
   return firestore
 }
 
+const sFirestore = firebase.firestore
+
 export const firebaseApp = { 
   app,
-  db
+	db,
+	sFirestore
 }

@@ -73,7 +73,28 @@ const SelectedProject = props => {
   //members edit button
   const onHandleMembersEditButtonClick = () => {
     setMembersAlert(true)
-  }
+	}
+	
+	//onAdd project member
+	const onAddProjectMember = async member => {
+		if (!selectedProject || !member) return
+		try {
+			await projectsService.saveProjectMember(selectedProject.id, member, onProjectMemberCallback)
+		} catch (error) {
+			alert(error)
+		}
+	}
+
+	const onProjectMemberCallback = result => {
+		const { type, member, msg } = result
+		if (type === 0) {
+			const { members } = selectedProject
+			members.push(member)
+			setSelectedProject(selectedProject)
+		} else {
+			alert(msg)
+		}
+	}
 
   return (
     <div>
@@ -98,9 +119,11 @@ const SelectedProject = props => {
           )}
           {openMembersAlert && (
             <ProjectMembers
+							projectId={selectedProject.id}
               open={openMembersAlert}
               handleClose={() => setMembersAlert(false)}
-              members={selectedProject.members}/>
+              members={selectedProject.members}
+							onAddMember={onAddProjectMember}/>
           )}
         </div>
       )}
