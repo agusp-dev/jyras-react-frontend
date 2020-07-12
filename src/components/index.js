@@ -6,8 +6,6 @@ export * from './projects/ProjectList'
 
 export * from './home/Home'
 
-export * from './splash/Splash'
-
 export * from './appBar/MenuAppBar'
 
 export * from './privateRoute/PrivateRoute'

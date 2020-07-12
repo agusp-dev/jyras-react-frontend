@@ -24,7 +24,7 @@ const ProjectCard = ({id, name, description, members, onSelectedProject}) => {
               {members.map(m => {
                 return (
                   <Avatar 
-                    key={m.id}
+                    key={m.email}
                     alt={`${m.name} ${m.surname}`}
                     src='no'/>
                 )

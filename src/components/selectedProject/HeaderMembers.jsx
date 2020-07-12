@@ -13,7 +13,7 @@ const HeaderMembers = ({members, onHandleMembersEdit}) => {
       {members && members.length > 0 ? (
         <AvatarGroup max={6}>
           {members.map(m => {
-            return <Avatar key={m.id} alt={`${m.name} ${m.surname}`} src='no' />
+            return <Avatar key={m.email} alt={`${m.name} ${m.surname}`} src='no' />
         })}
       </AvatarGroup>
       ) : (

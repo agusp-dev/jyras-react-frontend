@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TextField } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
 import PropTypes from 'prop-types'
@@ -11,7 +11,6 @@ const MembersFilter = ({members, selectedMember, onMemberSelected}) => {
     <Autocomplete
 			className={classes.autocomplete}
 			inputValue={selectedMember ? selectedMember.email : ''}
-			// value={selectedMember || ''}
       onChange={onMemberSelected}
 			id='members-filter'
       options={members}

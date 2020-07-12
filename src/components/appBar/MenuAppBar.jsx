@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { userAuthService } from '../../service' 
 import { Redirect, NavLink } from 'react-router-dom'
@@ -29,14 +29,15 @@ const MenuAppBar = ({routes, name, surname}) => {
     setAnchorEl(null);
   };
 
-  const handleLogout = useCallback(
-    async event => {
-      event.preventDefault()
+  const handleLogout = async () => {
+    try {
       await userAuthService.firebaseLogout()
       localStorage.removeItem('user')
       setLogout(true)
+    } catch(error) {
+      alert(error)
     }
-  )
+  }
 
   if (logout) {
     return <Redirect to='/' />
@@ -46,7 +47,7 @@ const MenuAppBar = ({routes, name, surname}) => {
     <AppBar className={classes.appbar} position="static">
       <Toolbar>
         <Grid container>
-          <Grid xs={12} sm={2} container className={classes.logoContainer}>
+          <Grid item xs={12} sm={2} container className={classes.logoContainer}>
             <NavLink to='/'>
               <img src={Logo} alt="Logo" className={classes.logo}/>
             </NavLink>
@@ -66,7 +67,7 @@ const MenuAppBar = ({routes, name, surname}) => {
               })}
             </div>
           </Grid>
-          <Grid xs={12} sm={2} container className={classes.menuNav}> 
+          <Grid item xs={12} sm={2} container className={classes.menuNav}> 
             <Typography>
               {name && surname ? `${name} ${surname}` : 'Ghest'}
             </Typography>
@@ -101,53 +102,6 @@ const MenuAppBar = ({routes, name, surname}) => {
         </Grid>
       </Toolbar>
     </AppBar>
-
-
-
-
-
-
-    // <div className={classes.root}>
-    //   <AppBar className={classes.appbar} position="static">
-    //     <Toolbar>
-    //       <div className={classes.title}>
-    //         <img src={Logo} alt="Logo" className={classes.logo}/>
-    //       </div>
-          // <Typography>
-          //   {name && surname ? `${name} ${surname}` : 'Ghest'}
-          // </Typography>
-          // <div>
-          //   <IconButton
-          //     aria-label="account of current user"
-          //     aria-controls="menu-appbar"
-          //     aria-haspopup="true"
-          //     onClick={handleMenu}
-          //     color="inherit"
-          //   >
-          //     <AccountCircle />
-          //   </IconButton>
-          //   <Menu
-          //     id="menu-appbar"
-          //     anchorEl={anchorEl}
-          //     anchorOrigin={{
-          //       vertical: 'top',
-          //       horizontal: 'right',
-          //     }}
-          //     keepMounted
-          //     transformOrigin={{
-          //       vertical: 'top',
-          //       horizontal: 'right',
-          //     }}
-          //     open={open}
-          //     onClose={handleClose}
-          //   >
-          //     <MenuItem onClick={handleClose}>Profile</MenuItem>
-          //     <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          //   </Menu>
-          // </div>
-    //     </Toolbar>
-    //   </AppBar>
-    // </div>
   )
 }
 

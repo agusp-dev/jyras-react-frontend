@@ -2,14 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { SelectedProjectTasksContainer } from './SelectedProjectTasksContainer'
 import { AddProject } from '../alerts/addProject/AddProject'
 import { ProjectMembers } from '../alerts/projectMembers/ProjectMembers'
-import { useStyles } from './styles'
 import { Header } from './Header'
 import { Redirect } from 'react-router'
 import { projectsService, userService } from '../../service'
 
 const SelectedProject = props => {
-
-  const classes = useStyles()
 
   const [openEditAlert, setEditAlert] = useState(false)
 	const [openMembersAlert, setMembersAlert] = useState(false)

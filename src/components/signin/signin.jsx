@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { Copyright } from '../../components'
 import Logo from '../../assets/logo/logo.svg'
 import { Button, CssBaseline, TextField, FormControlLabel, 
@@ -31,21 +31,20 @@ const Signin = () => {
     }
   }
 
-  const handleLogin = useCallback(
-    async event => {
-      setProgress(true)
-      event.preventDefault()
-      const { email, password } = event.target.elements
-      try {
-        await userAuthService.firebaseLogin(email.value, password.value, onSigninCallback)
-      } catch (error) {
-        alert(error)
-        setProgress(false)
-      }
+  const handleLogin = async event => {
+    setProgress(true)
+    event.preventDefault()
+    const { email, password } = event.target.elements
+    try {
+      await userAuthService.firebaseLogin(email.value, password.value, onSigninCallback)
+    } catch (error) {
+      alert(error)
+      setProgress(false)
     }
-  )
+  }
 
   const onGetUserCallback = result => {
+    setProgress(false)
     const { type, loggedUser, msg } = result
     if (type === 0) {
       localStorage.setItem('user', JSON.stringify(loggedUser))
@@ -53,7 +52,6 @@ const Signin = () => {
     } else {
       alert(msg)
     }
-    setProgress(false)
   }
 
   /**

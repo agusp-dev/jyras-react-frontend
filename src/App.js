@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Signin, NoMatchPage, PrivateRoute } from './components'
 import { Home, Projects, SelectedProject } from './view'
-import IconButton from '@material-ui/core/IconButton'
 import { Apps, Home as HomeIcon  } from '@material-ui/icons'
 
 export const AuthContext = React.createContext()

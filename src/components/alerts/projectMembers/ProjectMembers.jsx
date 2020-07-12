@@ -56,7 +56,7 @@ const ProjectMembers = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {selectedUser && (
+                {selectedUser ? (
                   <TableRow key={selectedUser.id}>
                     <TableCell>
                       <Avatar alt={`${selectedUser.name} ${selectedUser.surname}`} src='n'/>
@@ -75,6 +75,10 @@ const ProjectMembers = ({
                         Add
                       </Button>
                     </TableCell>
+                  </TableRow>
+                ) : (
+                  <TableRow>
+                    <TableCell width='15%'>No User Selected</TableCell>
                   </TableRow>
                 )}
               </TableBody>
@@ -95,9 +99,9 @@ const ProjectMembers = ({
                   <TableCell className={classes.actionsRow} align='right'>Actions</TableCell>
                 </TableRow>
               </TableHead>
-              {members.length > 0 ? (
-                <TableBody>
-                  {members.map(m => {
+              <TableBody>
+                {members.length > 0 ? (
+                  members.map(m => {
                     return (
                       <TableRow key={m.email}>
                         <TableCell>
@@ -119,9 +123,13 @@ const ProjectMembers = ({
                         </TableCell>
                       </TableRow>
                     )
-                  })}
-                </TableBody>
-              ) : 'No Users'}
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell width='15%'>No Members</TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
             </Table>
           </TableContainer>
 
