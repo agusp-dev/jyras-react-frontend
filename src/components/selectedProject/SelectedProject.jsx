@@ -124,12 +124,13 @@ const SelectedProject = props => {
 		const { type, member, msg } = result
 		if (type === 0) {
 			const { members } = selectedProject
-			members.push(member)
+      members.push(member)
 			setSelectedUser(undefined)
 			setSelectedProject( prevState => ({
 				...prevState,
 				members
-			}))
+      }))
+      getUsers()
 		} else {
 			alert(msg)
 		}

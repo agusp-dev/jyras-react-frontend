@@ -24,43 +24,6 @@ const ProjectMembers = ({
 
   const classes = useStyles()
 
-  // const [filteredUsers, setFilteredUsers] = useState(undefined)
-  // const [selectedUser, setSelectedUser] = useState(undefined)
-  
-  // const onGetAllUsers = result => {
-	// 	const { type, msg } = result
-	// 	let { users } = result
-  //   if (type !== 0) {
-  //     alert(msg)
-  //     return
-	// 	}
-
-	// 	//remove project members in array
-	// 	if (users.length > 0 && members.length > 0) {
-	// 		users = users.filter( u => {
-	// 			return !members.some( m => m.email === u.email )
-	// 		})
-	// 	}
-		
-	// 	setFilteredUsers(users)
-	// }
-
-	// const getUsers = async () => {
-	// 	try {
-	// 		await userService.getAllUsers(onGetAllUsers)
-	// 	} catch(error) {
-	// 		alert(error)
-	// 	}
-	// }
-
-	// useEffect(() => {
-	// 	getUsers()
-	// }, [])
-
-  // const handleMemberSelected = (e, user) => {
-  //   setSelectedUser(user)
-	// }
-
   return (
     <div>
       <Dialog
