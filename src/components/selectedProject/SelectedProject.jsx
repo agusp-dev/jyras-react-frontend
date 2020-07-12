@@ -5,9 +5,7 @@ import { ProjectMembers } from '../alerts/projectMembers/ProjectMembers'
 import { useStyles } from './styles'
 import { Header } from './Header'
 import { Redirect } from 'react-router'
-import { projectsService } from '../../service'
-import { useRadioGroup } from '@material-ui/core'
-import { userService } from '../../service'
+import { projectsService, userService } from '../../service'
 
 const SelectedProject = props => {
 
@@ -31,7 +29,7 @@ const SelectedProject = props => {
 		}
 
 		//remove project members in array
-		const { members } = selectedProject
+    const { members } = selectedProject
 		if (users.length > 0 && members.length > 0) {
 			users = users.filter( u => {
 				return !members.some( m => m.email === u.email )
@@ -110,17 +108,17 @@ const SelectedProject = props => {
     setMembersAlert(true)
 	}
 	
-	//onAdd project member
+	//on Add project member
 	const onAddProjectMember = async member => {
 		if (!selectedProject || !member) return
 		try {
-			await projectsService.saveProjectMember(selectedProject.id, member, onProjectMemberCallback)
+			await projectsService.saveProjectMember(selectedProject.id, member, onAddProjectMemberCallback)
 		} catch (error) {
 			alert(error)
 		}
 	}
 
-	const onProjectMemberCallback = result => {
+	const onAddProjectMemberCallback = result => {
 		const { type, member, msg } = result
 		if (type === 0) {
 			const { members } = selectedProject
@@ -134,8 +132,36 @@ const SelectedProject = props => {
 		} else {
 			alert(msg)
 		}
-	}
+  }
+  
+  //on remove project member
+  const onRemoveProjectMember = async member => {
+    if (!member) return
+    try {
+      await projectsService.removeProjectMember(selectedProject.id, member, onRemoveProjectMemberCallback)
+    } catch(error) {
+      alert(error)
+    }
+  }
 
+  const onRemoveProjectMemberCallback = result => {
+    const { type, member, msg } = result
+    if (type === 0) {
+      let { members } = selectedProject
+      members.forEach((value, i) => {
+        if (members[i].email === member.email) {
+          members.splice(i, 1)
+        }
+      })
+      setSelectedProject( prevState => ({
+        ...prevState,
+        members
+      }))
+      getUsers()
+    } else {
+      alert(msg)
+    }
+  }
 
   return (
     <div>
@@ -167,7 +193,8 @@ const SelectedProject = props => {
 							filterUsers={filterUsers}
 							selectedUser={selectedUser}
 							setSelectedUser={user => setSelectedUser(user)}
-							onAddMember={onAddProjectMember}/>
+							onAddMember={onAddProjectMember}
+              onRemoveMember={onRemoveProjectMember}/>
           )}
         </div>
       )}

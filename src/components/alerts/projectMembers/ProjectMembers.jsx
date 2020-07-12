@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Dialog, DialogActions, 
   DialogContent, DialogTitle, DialogContentText,
   Button, Table, TableBody, TableCell, 
   TableContainer, TableHead, TableRow, 
-  Paper, Avatar, Grid, Typography, 
-  IconButton } from '@material-ui/core'
-import { Check, Delete, AirlineSeatFlatAngledSharp } from '@material-ui/icons'
+  Paper, Avatar, Grid, Typography } from '@material-ui/core'
+import { Check, Delete } from '@material-ui/icons'
 import { useStyles } from './styles'
 import PropTypes from 'prop-types'
-import { userService } from '../../../service'
 import { MembersFilter } from './MembersFilter'
-import { projectsService } from '../../../service'
 
 const ProjectMembers = ({
 	projectId,
@@ -20,7 +17,8 @@ const ProjectMembers = ({
 	filterUsers,
 	selectedUser,
 	setSelectedUser, 
-	onAddMember}) => {
+  onAddMember,
+  onRemoveMember}) => {
 
   const classes = useStyles()
 
@@ -113,6 +111,7 @@ const ProjectMembers = ({
                             variant='contained'
                             color='secondary'
                             size='small'
+                            onClick={() => onRemoveMember(m)}
                             startIcon={ <Delete /> }
                           >
                             Remove
@@ -128,19 +127,10 @@ const ProjectMembers = ({
 
         </DialogContent>
         <DialogActions className={classes.memberButtonContent}>
-            {/* <AddMemberButton handleClickCallback={onHandleNewMemberClick}/> */}
             <Button onClick={handleClose} color='primary'>
               CLOSE
             </Button>
         </DialogActions>
-
-        {/* {showNewUserAlert && (
-          <AddMember
-            open={showNewUserAlert}
-            handleClose={() => openNewUserAlert(false)}
-            handleSave={onHandleNewMemberSave} />
-        )} */}
-          
       </Dialog>
     </div>
   )
@@ -153,7 +143,8 @@ ProjectMembers.propTypes = {
 	members: PropTypes.array.isRequired,
 	filterUsers: PropTypes.array.isRequired,
 	setSelectedUser: PropTypes.func.isRequired,
-	onAddMember: PropTypes.func.isRequired
+  onAddMember: PropTypes.func.isRequired,
+  onRemoveMember: PropTypes.func.isRequired
 }
 
 export { ProjectMembers }

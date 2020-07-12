@@ -97,9 +97,32 @@ const saveProjectMember = (id, member, callback) => {
 		})
 }
 
+const removeProjectMember = (id, member, callback) => {
+  const dRef = firebaseApp.db().collection('projects').doc(id)
+  dRef
+    .update({
+      members: firebaseApp.sFirestore.FieldValue.arrayRemove(member)
+    })
+    .then(() => {
+      callback({
+        type: 0,
+        member,
+        msg: null
+      })
+    })
+    .catch(error => {
+      callback({
+        type: 1,
+        member: null,
+        msg: error.message
+      })
+    })
+}
+
 export const projectsService = {
   getProjectsData,
   saveNewProject,
 	updateProject,
-	saveProjectMember
+  saveProjectMember,
+  removeProjectMember
 }
