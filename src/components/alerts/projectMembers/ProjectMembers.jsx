@@ -1,77 +1,64 @@
-import React, { useState } from 'react'
-import { AddMemberButton } from './AddMemberButton'
+import React, { useState, useEffect } from 'react'
 import { Dialog, DialogActions, 
   DialogContent, DialogTitle, DialogContentText,
   Button, Table, TableBody, TableCell, 
   TableContainer, TableHead, TableRow, 
   Paper, Avatar, Grid, Typography, 
   IconButton } from '@material-ui/core'
-import { Check, Delete } from '@material-ui/icons'
+import { Check, Delete, AirlineSeatFlatAngledSharp } from '@material-ui/icons'
 import { useStyles } from './styles'
 import PropTypes from 'prop-types'
-import { AddMember } from '../addMember/AddMember'
 import { userService } from '../../../service'
 import { MembersFilter } from './MembersFilter'
 import { projectsService } from '../../../service'
 
-const ProjectMembers = ({projectId, members, open, handleClose, onAddMember}) => {
+const ProjectMembers = ({
+	projectId,
+	open,  
+	handleClose, 
+	members, 
+	filterUsers,
+	selectedUser,
+	setSelectedUser, 
+	onAddMember}) => {
 
   const classes = useStyles()
 
-  const [showNewUserAlert, openNewUserAlert] = useState(false)
-  const [filteredUsers, setFilteredUsers] = useState([])
-  const [selectedUser, setSelectedUser] = useState(undefined)
+  // const [filteredUsers, setFilteredUsers] = useState(undefined)
+  // const [selectedUser, setSelectedUser] = useState(undefined)
   
-  const onGetAllUsers = result => {
-    const { type, users, msg } = result
-    if (type !== 0) {
-      alert(msg)
-      return
-    }
-    setFilteredUsers(users)
-  }
-  userService.getAllUsers(onGetAllUsers)
-
-  const onHandleNewMemberClick = () => {
-    openNewUserAlert(true)
-  }
-
-  const onHandleNewMemberSave = e => {
-    e.preventDefault()
-    const email = e.target.email.value
-    const name = e.target.name.value
-    const surname = e.target.surname.value
-    addNewUser(email, name, surname)
-    openNewUserAlert(false)
-  }
-
-  const addNewUser = (e, n, s) => {
-    console.log(e, n, s)
-  }
-
-  const handleMemberSelected = (e, user) => {
-    console.log(user)
-    setSelectedUser(user)
-	}
-	
-	// const handleAddButtonClick = user => {
-	// 	if ( user && user.email && user.name && user.surname ) {
-	// 		addProjectMember(user)
-	// 	}
-	// }
-
-	// const addProjectMember = member => {
-	// 	projectsService.saveProjectMember(projectId, member, onProjectMemberSaved)
-	// }
-
-	// const onProjectMemberSaved = result => {
+  // const onGetAllUsers = result => {
 	// 	const { type, msg } = result
-	// 	if (type === 0) {
-
-	// 		setSelectedUser(undefined)
-	// 	} else {
-	// 		alert(msg)
+	// 	let { users } = result
+  //   if (type !== 0) {
+  //     alert(msg)
+  //     return
 	// 	}
+
+	// 	//remove project members in array
+	// 	if (users.length > 0 && members.length > 0) {
+	// 		users = users.filter( u => {
+	// 			return !members.some( m => m.email === u.email )
+	// 		})
+	// 	}
+		
+	// 	setFilteredUsers(users)
+	// }
+
+	// const getUsers = async () => {
+	// 	try {
+	// 		await userService.getAllUsers(onGetAllUsers)
+	// 	} catch(error) {
+	// 		alert(error)
+	// 	}
+	// }
+
+	// useEffect(() => {
+	// 	getUsers()
+	// }, [])
+
+  // const handleMemberSelected = (e, user) => {
+  //   setSelectedUser(user)
 	// }
 
   return (
@@ -91,8 +78,9 @@ const ProjectMembers = ({projectId, members, open, handleClose, onAddMember}) =>
 
           <Grid container className={classes.autocompleteContainer}>
             <MembersFilter 
-              members={filteredUsers}
-              onMemberSelected={handleMemberSelected}/>
+							members={filterUsers || []}
+							selectedMember={selectedUser}
+              onMemberSelected={(e, user) => setSelectedUser(user)}/>
           </Grid>
 
           <TableContainer className={classes.selectedUserTable} component={Paper}>
@@ -150,7 +138,7 @@ const ProjectMembers = ({projectId, members, open, handleClose, onAddMember}) =>
                 <TableBody>
                   {members.map(m => {
                     return (
-                      <TableRow key={m.id}>
+                      <TableRow key={m.email}>
                         <TableCell>
                           <Avatar alt={`${m.name} ${m.surname}`} src='n'/>
                         </TableCell>
@@ -197,9 +185,11 @@ const ProjectMembers = ({projectId, members, open, handleClose, onAddMember}) =>
 
 ProjectMembers.propTypes = {
 	projectId: PropTypes.string.isRequired,
-  open: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
+	open: PropTypes.bool.isRequired,
+	handleClose: PropTypes.func.isRequired,
 	members: PropTypes.array.isRequired,
+	filterUsers: PropTypes.array.isRequired,
+	setSelectedUser: PropTypes.func.isRequired,
 	onAddMember: PropTypes.func.isRequired
 }
 

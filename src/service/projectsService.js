@@ -76,7 +76,6 @@ const updateProject = (id, project, callback) => {
 }
 
 const saveProjectMember = (id, member, callback) => {
-	console.log('lala', member)
 	const dRef = firebaseApp.db().collection('projects').doc(id)
 	dRef
 		.update({

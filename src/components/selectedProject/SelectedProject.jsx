@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SelectedProjectTasksContainer } from './SelectedProjectTasksContainer'
 import { AddProject } from '../alerts/addProject/AddProject'
 import { ProjectMembers } from '../alerts/projectMembers/ProjectMembers'
@@ -6,14 +6,52 @@ import { useStyles } from './styles'
 import { Header } from './Header'
 import { Redirect } from 'react-router'
 import { projectsService } from '../../service'
+import { useRadioGroup } from '@material-ui/core'
+import { userService } from '../../service'
 
 const SelectedProject = props => {
 
   const classes = useStyles()
 
   const [openEditAlert, setEditAlert] = useState(false)
-  const [openMembersAlert, setMembersAlert] = useState(false)
+	const [openMembersAlert, setMembersAlert] = useState(false)
+	//selected user in members alert
+	const [selectedUser, setSelectedUser] = useState(undefined)
+	//filter users in members alert
+	const [filterUsers, setFilterUsers] = useState(undefined)
 	
+
+	//get all users to add to filter
+	const onGetAllUsers = result => {
+		const { type, msg } = result
+		let { users } = result
+    if (type !== 0) {
+      alert(msg)
+      return
+		}
+
+		//remove project members in array
+		const { members } = selectedProject
+		if (users.length > 0 && members.length > 0) {
+			users = users.filter( u => {
+				return !members.some( m => m.email === u.email )
+			})
+		}
+		
+		setFilterUsers(users)
+	}
+	
+	const getUsers = async () => {
+		try {
+			await userService.getAllUsers(onGetAllUsers)
+		} catch(error) {
+			alert(error)
+		}
+	}
+	useEffect(() => {
+		getUsers()
+	}, [])
+
 	const returnToIndex = () => {
 		return <Redirect to='/'/> 
 	}
@@ -23,12 +61,9 @@ const SelectedProject = props => {
    */
   if (props.location && props.location.state) returnToIndex()
   const { project } = props.location.state
-  console.log(project)
   if (!project) returnToIndex()
 
-  
   const [selectedProject, setSelectedProject] = useState(project)
-
 
   const onBackButtonClick = () => {
     if (props.history) {
@@ -90,11 +125,16 @@ const SelectedProject = props => {
 		if (type === 0) {
 			const { members } = selectedProject
 			members.push(member)
-			setSelectedProject(selectedProject)
+			setSelectedUser(undefined)
+			setSelectedProject( prevState => ({
+				...prevState,
+				members
+			}))
 		} else {
 			alert(msg)
 		}
 	}
+
 
   return (
     <div>
@@ -122,7 +162,10 @@ const SelectedProject = props => {
 							projectId={selectedProject.id}
               open={openMembersAlert}
               handleClose={() => setMembersAlert(false)}
-              members={selectedProject.members}
+							members={selectedProject.members}
+							filterUsers={filterUsers}
+							selectedUser={selectedUser}
+							setSelectedUser={user => setSelectedUser(user)}
 							onAddMember={onAddProjectMember}/>
           )}
         </div>
